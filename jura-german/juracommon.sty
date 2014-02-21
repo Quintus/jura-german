@@ -88,11 +88,9 @@
 
 % German law science numbering of sections is a little different
 % from the standard.
-\ifcsname thechapter \endcsname
-\renewcommand\thechapter{\Alph{chapter}.}
-\fi
-\renewcommand\thesection{\Roman{section}.}
-\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thechapter{\Alph{chapter}}
+\renewcommand\thesection{\Roman{section}}
+\renewcommand\thesubsection{\arabic{subsection}}
 \renewcommand\thesubsubsection{\alph{subsubsection})}
 \renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
 \renewcommand\thesubparagraph{(\arabic{subparagraph})}
