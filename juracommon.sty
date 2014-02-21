@@ -1,0 +1,200 @@
+%% juracommon.sty
+%% Copyright 2013-2014 Marvin Gülker
+%
+% This work may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3 of this license
+% or (at your option) any later version.  The latest version of this
+% license is in http://www.latex-project.org/lppl.txt and version 1.3
+% or later is part of all distributions of LaTeX version 2005/12/01 or
+% later.
+%
+% This work has the LPPL maintenance status 'maintained'.
+%
+% The Current Maintainer of this work is Marvin Gülker.
+%
+% This work consists of the files germabbrevs.sty, juracommon.sty, and
+% jurreport.cls.
+
+%%%%%%%%%%%%%%%%%%%% 1.Class identification %%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{juracommon}[2014/01/26 Common law stuff]
+
+%%%%%%%%%%%%%%%%%%%% 2. Initial code %%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{ifthen}
+\newboolean{short@lawrefs}
+\newboolean{short@norms}
+\newboolean{real@greeks}
+
+%%%%%%%%%%%%%%%%%%%% 3. Declaration of options %%%%%%%%%%%%%%%%%%%%
+
+\DeclareOption{shortlawrefs}{\setboolean{short@lawrefs}{true}}
+\DeclareOption{shortnorms}{\setboolean{short@norms}{true}}
+\DeclareOption{realgreeks}{\setboolean{real@greeks}{true}}
+
+%%%%%%%%%%%%%%%%%%%% 4. Execution of options %%%%%%%%%%%%%%%%%%%%
+
+\ProcessOptions\relax % Cf. LaTeX Companion, 2nd edition, p. 882
+
+%%%%%%%%%%%%%%%%%%%% 5. Package loading %%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{xspace}
+
+%%%%%%%%%%%%%%%%%%%% 6. Main code %%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \Greek and \greek
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define \greek and \Greek to allow usage of greek
+% letters similar to \alph and \Alph.
+
+\ifthenelse{\boolean{real@greeks}}{
+  \newcommand*{\@greek}[1]{%
+    \ifcase#1\or α\or β\or γ\or δ\or ε\or ζ\or η
+      \or θ\or ι\or κ\or λ\or μ\or ν\or ξ\or ο
+      \or π\or ρ\or ς\or τ\or υ\or φ\or χ\or ψ\or ω
+    \else\@ctrerr\fi
+  }
+  \newcommand*{\@Greek}[1]{%
+    \ifcase#1\or Α\or Β\or Γ\or Δ\or Ε\or Ζ\or Η
+      \or Θ\or Ι\or Κ\or Λ\or Μ\or Ν\or Ξ\or Ο
+      \or Π\or Ρ\or Σ\or Τ\or Υ\or Φ\or Χ\or Ψ\or Ω
+    \else\@ctrerr\fi
+}
+}{
+  \newcommand*{\@greek}[1]{%
+    $\ifcase#1\or\alpha\or\beta\or\gamma\or\delta\or\varepsilon
+      \or\zeta\or\eta\or\theta\or\iota\or\kappa\or\lambda
+      \or\mu\or\nu\or\xi\or o\or\pi\or\varrho\or\sigma
+      \or\tau\or\upsilon\or\phi\or\chi\or\psi\or\omega
+      \else\@ctrerr\fi$
+  }
+  \newcommand*{\@Greek}[1]{%
+    $\ifcase#1\or A\or B\or\Gamma\or\Delta\or\Epsilon
+      \or\Zeta\or\Eta\or\Theta\or\Iota\or\Kappa\or\Lambda
+      \or M\or N\or\Xi\or O\or\Pi\or P\or\Sigma
+      \or T\or\Upsilon\or\Phi\or X\or\Psi\or\Omega
+      \else\@ctrerr\fi$
+  }
+}
+
+\newcommand*\greek[1]{\expandafter\@greek\csname c@#1\endcsname}
+\newcommand*\Greek[1]{\expandafter\@Greek\csname c@#1\endcsname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Section numbering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% German law science numbering of sections is a little different
+% from the standard.
+\ifcsname thechapter \endcsname
+\renewcommand\thechapter{\Alph{chapter}.}
+\fi
+\renewcommand\thesection{\Roman{section}.}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\alph{subsubsection})}
+\renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
+\renewcommand\thesubparagraph{(\arabic{subparagraph})}
+
+% And indeed, numbering enumerations isn’t as easy as expected.
+%\renewcommand\theenumi{\greek{enumi}}     \renewcommand\labelenumi{\theenumi)}
+%\renewcommand\theenumii{\arabic{enumii}}  \renewcommand\labelenumii{(\theenumii)}
+%\renewcommand\theenumiii{\roman{enumiii}} \renewcommand\labelenumiii{\theenumiii.}
+%\renewcommand\theenumiv{\Greek{enumiv}}   \renewcommand\labelenumiv{\theenumiv)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abbreviations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand\style@lawbook[1]{\textsc{#1}}
+
+% Shortcuts for all the German law books.
+\newcommand\GG{\style@lawbook{gg}\xspace}
+\newcommand\BGB{\style@lawbook{bgb}\xspace}
+\newcommand\StGB{\style@lawbook{s}t\style@lawbook{gb}\xspace}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Law citations. § 1 Abs. 1 Satz 1...
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{@lastabs}\setcounter{@lastabs}{0}
+
+% The `shortlawrefs' option makes the law referencing commands
+% use a shorter form of citation. Example: §42 Abs 1 Satz 1 versus
+% §42 I 1.. \space@lawref defines the amount of space between the
+% main parts of a law reference (e.g. between "§42" and "Abs").
+\ifthenelse{\boolean{short@lawrefs}}{
+  % Short refs should have a thin space with highly discouraged
+  % linebreaking, this looks awful otherwise.
+  \newcommand\space@lawref{\nolinebreak[3]\,}
+
+  \newcommand\LawrefAbsatz[1]{%
+    \setcounter{@lastabs}{#1}%
+    \Roman{@lastabs}%
+  }
+  \newcommand\LawrefSatz[1]{#1}
+  \newcommand\LawrefNr[1]{#1}
+}{
+  % The long refs can have a more broad in-between space with
+  % only slightly discouraged linebreaking.
+  \newcommand\space@lawref{\nolinebreak[1] }
+
+  \newcommand\LawrefAbsatz[1]{Abs.\,#1}
+  \newcommand\LawrefSatz[1]{Satz\,#1}
+  \newcommand\LawrefNr[1]{Nr.\,#1}
+}
+% No shorter forms possible for the following abbrevs
+\newcommand\LawrefAlternative[1]{#1.\,Alt}
+\newcommand\LawrefHalbsatz[1]{#1.\,Hs.}
+
+% Userlevel commands for paragraphs
+\newcommand\p[1]{\S\,#1}
+\newcommand\pa[2]{\p{#1}\space@lawref\LawrefAbsatz{#2}}
+\newcommand\pas[3]{\pa{#1}{#2}\space@lawref\LawrefSatz{#3}}
+\newcommand\pan[3]{\pa{#1}{#2}\space@lawref\LawrefNr{#3}}
+\newcommand\pl[2]{\p{#1}\space@lawref\LawrefAlternative{#2}}
+\newcommand\pash[4]{\pas{#1}{#2}{#3}\space@lawref\LawrefHalbsatz{#4}}
+\newcommand\pasl[4]{\pas{#1}{#2}{#3}\space@lawref\LawrefAlternative{#4}}
+
+% Userlevel commands for articles
+\newcommand\A[1]{Art.\,#1}
+\newcommand\Aa[2]{\A{#1}\space@lawref\LawrefAbsatz{#2}}
+\newcommand\Aas[3]{\Aa{#1}{#2}\space@lawref\LawrefSatz{#3}}
+\newcommand\Aan[3]{\Aa{#1}{#2}\space@lawref\LawrefNr{#3}}
+\newcommand\Al[2]{\A{#1}\space@lawref\LawrefAlternative{#2}}
+\newcommand\Aash[4]{\Aas{#1}{#2}{#3}\space@lawref\LawrefHalbsatz{#4}}
+\newcommand\Aasl[4]{\Aas{#1}{#2}{#3}\space@lawref\LawrefAlternative{#4}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For writing treaties (and laws ;-))
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcounter{norm}
+\newcounter{subnorm}[norm]
+\renewcommand\thenorm{\S\,\arabic{norm}}
+
+\ifthenelse{\boolean{short@norms}}{%
+  \renewcommand\thesubnorm{\S\,\arabic{norm}\nolinebreak[3]\,\Roman{subnorm}}%
+}{%
+  \renewcommand\thesubnorm{\S\,\arabic{norm} Abs.\,\arabic{subnorm}}%
+}
+
+% Create a new §.
+\newenvironment{norm}[1]{%
+  \refstepcounter{norm}%
+  % Create a new (n)
+  \newenvironment{subnorm}{%
+    \stepcounter{subnorm}%
+    (\arabic{subnorm})~%
+  }{\par}%
+  %
+  \par\vspace{\baselineskip}%
+  \ifthenelse{\boolean{short@lawrefs}}{%
+    \noindent\thenorm~\textbf{#1.}%
+  }{%
+    \minisec{\thenorm{} #1}\vspace{\baselineskip}
+  }
+}{%
+  \par%
+}
