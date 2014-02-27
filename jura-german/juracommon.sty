@@ -87,13 +87,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % German law science numbering of sections is a little different
-% from the standard.
-\renewcommand\thechapter{\Alph{chapter}}
-\renewcommand\thesection{\Roman{section}}
-\renewcommand\thesubsection{\arabic{subsection}}
+% from the standard. KOMA-Script’s \autodot doesn’t get this.
+\KOMAoptions{numbers=noendperiod}
+\renewcommand\thechapter{\Alph{chapter}.}
+\renewcommand\thesection{\Roman{section}.}
+\renewcommand\thesubsection{\arabic{subsection}.}
 \renewcommand\thesubsubsection{\alph{subsubsection})}
 \renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
 \renewcommand\thesubparagraph{(\arabic{subparagraph})}
+
+% Number all levels
+\setcounter{secnumdepth}{\subparagraphnumdepth}
+
+%\othersectionlevelsformat{\paragraph}{}{\theparagraph}
 
 % And indeed, numbering enumerations isn’t as easy as expected.
 %\renewcommand\theenumi{\greek{enumi}}     \renewcommand\labelenumi{\theenumi)}
