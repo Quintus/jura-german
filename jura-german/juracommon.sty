@@ -25,12 +25,14 @@
 \newboolean{short@lawrefs}
 \newboolean{short@norms}
 \newboolean{real@greeks}
+\newboolean{start@roman}
 
 %%%%%%%%%%%%%%%%%%%% 3. Declaration of options %%%%%%%%%%%%%%%%%%%%
 
 \DeclareOption{shortlawrefs}{\setboolean{short@lawrefs}{true}}
 \DeclareOption{shortnorms}{\setboolean{short@norms}{true}}
 \DeclareOption{realgreeks}{\setboolean{real@greeks}{true}}
+\DeclareOption{startroman}{\setboolean{start@roman}{true}}
 
 %%%%%%%%%%%%%%%%%%%% 4. Execution of options %%%%%%%%%%%%%%%%%%%%
 
@@ -83,18 +85,42 @@
 \newcommand*\Greek[1]{\expandafter\@Greek\csname c@#1\endcsname}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Section numbering
+% Sectioning
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Add a \part-like command that does not do a page break
+% and doesn’t have big formatting.
+\newcommand\minipart[1]{\clearpage\begin{center}\noindent#1\end{center}\addparttocentry{}{#1}}
 
 % German law science numbering of sections is a little different
 % from the standard. KOMA-Script’s \autodot doesn’t get this.
 \KOMAoptions{numbers=noendperiod}
-\renewcommand\thechapter{\Alph{chapter}.}
-\renewcommand\thesection{\Roman{section}.}
-\renewcommand\thesubsection{\arabic{subsection}.}
-\renewcommand\thesubsubsection{\alph{subsubsection})}
-\renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
-\renewcommand\thesubparagraph{(\arabic{subparagraph})}
+
+\ifthenelse{\equal{\KOMAClassName}{scrartcl}}{%
+  \ifthenelse{\boolean{start@roman}}{%
+    \renewcommand\thesection{\Roman{section}.}
+    \renewcommand\thesubsection{\arabic{subsection}.}
+    \renewcommand\thesubsubsection{\alph{subsubsection})}
+    \renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
+    \renewcommand\thesubparagraph{(\arabic{subparagraph})}
+  }{%
+    \renewcommand\thesection{\Alph{section}.}
+    \renewcommand\thesubsection{\Roman{subsection}.}
+    \renewcommand\thesubsubsection{\arabic{subsubsection}.}
+    \renewcommand\theparagraph{\alph{paragraph})}
+    \renewcommand\thesubparagraph{\alph{subparagraph}\alph{subparagraph})}
+  }
+}{% not scrartcl
+  \ifthenelse{\boolean{start@roman}}{\PackageError{juracommon}{%
+      Cannot use 'startroman' option if not scrartcl.}}{%
+    \renewcommand\thechapter{\Alph{chapter}.}
+    \renewcommand\thesection{\Roman{section}.}
+    \renewcommand\thesubsection{\arabic{subsection}.}
+    \renewcommand\thesubsubsection{\alph{subsubsection})}
+    \renewcommand\theparagraph{\alph{paragraph}\alph{paragraph})}
+    \renewcommand\thesubparagraph{(\arabic{subparagraph})}
+  }
+}
 
 % Number all levels
 \setcounter{secnumdepth}{\subparagraphnumdepth}
