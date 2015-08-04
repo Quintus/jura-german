@@ -169,7 +169,7 @@
 % angesprochene Anpassung entspricht es dem Original aus biblatex.def
 % in TeXLive 2015.
 \renewbibmacro*{byeditor+others}{%
-  \renewcommand*\multinamedelim{\addkoma}%
+  \renewcommand*\multinamedelim{\addcomma\addspace{}}%
   \renewcommand*\finalnamedelim{\addspace{}und\addspace{}}%
   \ifnameundef{editor}
     {}
