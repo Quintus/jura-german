@@ -15,8 +15,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatierung für Einzelfelder
 
-% Abweichung zu authortitle.bbx
+% Titelfelder weder kursiv (Standard in biblatex.def) noch von
+% Anführungszeichen umschlossen setzen.
 \DeclareFieldFormat{title}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1\isdot}
 
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
