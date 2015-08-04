@@ -700,6 +700,67 @@
   \usebibmacro{setpageref}%
   \finentry}
 
+% Dieser ist neu im Vergleich zum Original-authortitle-ibd.bbx.
+% Juristische Kommentare.
+% Das Feld "maintitle" macht den Unterschied: Soll der Kommentar
+% nach Autor/Herausgeber, oder nach Titel (maintitle) in der
+% Bibliografie aufgeführt werden?
+\DeclareBibliographyDriver{commentary}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \iffieldundef{maintitle}
+    {\usebibmacro{author/editor+others/translator+others}% Komplett *mit* Editor
+     \setunit{\labelnamepunct}
+     \printfield{title}}%
+    {\printfield{maintitle}%
+     \newunit\newblock
+     \usebibmacro{author/translator+others}} % *Ohne* Editor, der wird dann von byeditor+others nachgesetzt wie bei einem @incollection.
+  \newblock\newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{location+date}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \iffieldundef{shorthand}
+    {}
+    {\setunit{\addsemicolon\addspace}\newblock
+      \printtext{\zitiertals{} \textit{Bearbeiter}, in: \printfield{shorthand}}}
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 \DeclareBibliographyAlias{mvbook}{book}
 \DeclareBibliographyAlias{bookinbook}{inbook}
 \DeclareBibliographyAlias{suppbook}{inbook}
