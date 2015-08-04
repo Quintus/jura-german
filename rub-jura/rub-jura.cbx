@@ -11,6 +11,7 @@
 
 \newbool{cbx:parens}
 \newbool{cbx:loccit}
+\newbool{cbx:cmtryineditor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Feldanpassungen
@@ -23,8 +24,8 @@
 \DeclareFieldFormat{incommentaryeditor}{\textit{#1}}
 
 % Format für kursive Nachnamen
-\DeclareNameFormat{last-only-italic}{%
-  \usebibmacro{name:last}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}}
+\DeclareNameFormat{last-only-italic}{\usebibmacro{name:last}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}}
+\DeclareNameFormat{last-only}{\usebibmacro{name:last}{#1}{#3}{#5}{#7}}
 
 \DeclareBibliographyOption{ibidpage}[true]{%
   \ifstrequal{#1}{true}
@@ -38,8 +39,19 @@
        {\usebibmacro{cite:ibid}}
        {\ifnameundef{labelname}
           {}
-          {\printnames[last-only-italic]{labelname}%
+          % Bei Kommentaren darf der Autorenname nicht kursiv
+          % sein (das ist schon der Bearbeiter, siehe Redefinition des
+          % prenote-Bibmakros). Ist aber der Autor eines Kommentars sein
+          % einziger Autor, muss der Name wiederum kursiv sein. Das wird
+          % -- etwas hackish -- an der Existenz des prenote-Arguments
+          % festgemacht. (Heißt: keine normalen prenotes mit @commentary-Einträgen).
+          {\ifentrytype{commentary}%
+            {\ifbool{cbx:cmtryineditor}% prenote-Feld (= mehr als ein Editor) vorhanden?
+              {\printnames[list-only]{labelname}}%
+              {\printnames[last-only-italic]{labelname}}}%
+            {\printnames[last-only-italic]{labelname}} % Für alle nicht-@commentaries die Namen kursiv.
            \setunit{\nametitledelim}}%
+         %%%% Zusatzinfos je Typ %%%%
         \ifentrytype{book}{% Titel nur für Monografien anzeigen
           \usebibmacro{cite:title}}%
         {}%
@@ -110,12 +122,19 @@
 
 % Überschreibe das ursprüngliche prenote-Bibmakro aus biblatex.def,
 % sodass Formatierung für Bearbeiter eines @commentary möglich wird.
+% Haben \cite-Aufrufe für ein @commentary ein prenote-Feld gesetzt,
+% handelt es sich um einen Bearbeiter. In diesem Falle wird der
+% Boolean cbx:cmtryineditor auf true gesetzt, sonst ist er false
+% (das wird für die Formatierung des Hauptautors wichtig, siehe
+% Definition des Bibmakros cite).
 \renewbibmacro*{prenote}{%
+  \global\boolfalse{cbx:cmtryineditor}%
   \iffieldundef{prenote}
     {}
     {\ifentrytype{commentary}%
-      {\printfield[incommentaryeditor]{prenote}%
-        \printtext{\addcomma\addspace}\usebibmacro{in:}}%
+      {\global\booltrue{cbx:cmtryineditor}%
+       \printfield[incommentaryeditor]{prenote}%
+       \printtext{\addcomma\addspace}\usebibmacro{in:}}%
       {\printfield{prenote}}%
       \setunit{\prenotedelim}}}
 
