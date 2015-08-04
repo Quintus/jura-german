@@ -816,12 +816,6 @@
   \printfield{number}%
   \newunit}
 
-\newbibmacro*{location+date}{%
-  \printlist{location}%
-  \setunit*{\addcomma\space}%
-  \usebibmacro{date}%
-  \newunit}
-
 \newbibmacro*{institution+location+date}{%
   \printlist{location}%
   \iflistundef{institution}
@@ -844,7 +838,7 @@
 
 \newbibmacro*{location+date}{%
   \printlist{location}%
-  \setunit*{\addcomma\space}%
+  \setunit*{\space}%
   \usebibmacro{date}%
   \newunit}
 
