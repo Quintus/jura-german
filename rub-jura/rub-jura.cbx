@@ -43,8 +43,11 @@
           \usebibmacro{cite:title}}
         {}%
         \ifentrytype{article}{% Journalinfo nur für Artikel
-          \usebibmacro{journal+issuetitle}%
-        }
+          \usebibmacro{journal+issuetitle}}
+        {}%
+        \ifentrytype{incollection}{% ",in: Titel" nur für @incollection
+          \usebibmacro{in:}%
+          \usebibmacro{cite:title}}%
         {}}}%
     {\usebibmacro{cite:shorthand}}}
 
