@@ -20,6 +20,7 @@
 \DeclareFieldFormat{citetitle}{#1}
 \DeclareFieldFormat[book]{citetitle}{#1}
 \DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{citetitle}{#1}
+\DeclareFieldFormat{incommentaryeditor}{\textit{#1}}
 
 % Format für kursive Nachnamen
 \DeclareNameFormat{last-only-italic}{%
@@ -103,6 +104,17 @@
        {\postnotedelim}
        {\addspace\bibopenparen}%
      \printfield{postnote}\bibcloseparen}}
+
+% Überschreibe das ursprüngliche prenote-Bibmakro aus biblatex.def,
+% sodass Formatierung für Bearbeiter eines @commentary möglich wird.
+\renewbibmacro*{prenote}{%
+  \iffieldundef{prenote}
+    {}
+    {\ifentrytype{commentary}%
+      {\printfield[incommentaryeditor]{prenote}%
+        \printtext{\addcomma\addspace}\usebibmacro{in:}}%
+      {\printfield{prenote}}%
+      \setunit{\prenotedelim}}}
 
 \DeclareCiteCommand{\cite}
   {\usebibmacro{prenote}}
