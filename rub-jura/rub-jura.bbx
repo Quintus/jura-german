@@ -28,6 +28,12 @@
 \DeclareNameAlias{editor}{last-first}
 \DeclareNameAlias{translator}{last-first}
 
+% Juristen trennen Namen mit /, nicht mit Komma
+\renewcommand*\multinamedelim{\addslash}
+\renewcommand*\finalnamedelim{\addslash}
+\renewcommand*\multilistdelim{\addslash}
+\renewcommand*\finallistdelim{\addslash}
+
 \defbibenvironment{bibliography}
   {\list
      {}
