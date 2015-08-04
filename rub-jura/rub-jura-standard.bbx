@@ -89,7 +89,7 @@
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit
@@ -172,7 +172,7 @@
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit
@@ -225,7 +225,7 @@
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit\newblock
@@ -274,7 +274,7 @@
   \newunit\newblock
   \printfield{note}%
   \newunit\newblock
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit\newblock
@@ -325,7 +325,7 @@
   \newunit\newblock
   \printlist{organization}%
   \newunit
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit\newblock
@@ -370,7 +370,7 @@
   \newunit\newblock
   \printlist{organization}%
   \newunit
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit
@@ -557,7 +557,7 @@
   \newunit\newblock
   \printlist{organization}%
   \newunit
-  \usebibmacro{publisher+location+date}%
+  \usebibmacro{location+date}%
   \newunit\newblock
   \usebibmacro{chapter+pages}%
   \newunit
@@ -816,12 +816,8 @@
   \printfield{number}%
   \newunit}
 
-\newbibmacro*{publisher+location+date}{%
+\newbibmacro*{location+date}{%
   \printlist{location}%
-  \iflistundef{publisher}
-    {\setunit*{\addcomma\space}}
-    {\setunit*{\addcolon\space}}%
-  \printlist{publisher}%
   \setunit*{\addcomma\space}%
   \usebibmacro{date}%
   \newunit}
