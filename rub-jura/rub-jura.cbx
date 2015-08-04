@@ -12,6 +12,18 @@
 \newbool{cbx:parens}
 \newbool{cbx:loccit}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Feldanpassungen
+
+% Keine besondere Hervorhebung der Titel, insb. keine
+% Anführungsstriche wie im Standard aus biblatex.def.
+\DeclareFieldFormat{citetitle}{#1}
+\DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{citetitle}{#1}
+
+% Format für kursive Nachnamen
+\DeclareNameFormat{last-only-italic}{%
+  \usebibmacro{name:last}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}}
+
 \DeclareBibliographyOption{ibidpage}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{loccittracker=constrict}}
@@ -24,7 +36,7 @@
        {\usebibmacro{cite:ibid}}
        {\ifnameundef{labelname}
           {}
-          {\printnames{labelname}%
+          {\printnames[last-only-italic]{labelname}%
            \setunit{\nametitledelim}}%
         \usebibmacro{cite:title}}}%
     {\usebibmacro{cite:shorthand}}}
