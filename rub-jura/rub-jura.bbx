@@ -24,9 +24,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatierung für Namenslisten
 
-\DeclareNameAlias{author}{last-first}
-\DeclareNameAlias{editor}{last-first}
-\DeclareNameAlias{translator}{last-first}
+\DeclareNameFormat{last-first-italic}{%
+  \usebibmacro{name:last-first}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}
+  \textit{\usebibmacro{name:andothers}}}
+
+\DeclareNameAlias{author}{last-first-italic}
+\DeclareNameAlias{editor}{last-first-italic}
+\DeclareNameAlias{translator}{last-first-italic}
 
 % Juristen trennen Namen mit /, nicht mit Komma
 \renewcommand*\multinamedelim{\addslash}
