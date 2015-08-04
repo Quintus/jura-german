@@ -41,13 +41,16 @@
           {\printnames[last-only-italic]{labelname}%
            \setunit{\nametitledelim}}%
         \ifentrytype{book}{% Titel nur für Monografien anzeigen
-          \usebibmacro{cite:title}}
+          \usebibmacro{cite:title}}%
         {}%
         \ifentrytype{article}{% Journalinfo nur für Artikel
-          \usebibmacro{journal+issuetitle}}
+          \usebibmacro{journal+issuetitle}}%
         {}%
         \ifentrytype{incollection}{% ",in: Titel" nur für @incollection
           \usebibmacro{in:}%
+          \usebibmacro{cite:title}}%
+        {}%
+        \ifentrytype{commentary}{% Kommentare ohne shorthand müssen mit (Kurz-)titel zitiert werden
           \usebibmacro{cite:title}}%
         {}}}%
     {\usebibmacro{cite:shorthand}}}
