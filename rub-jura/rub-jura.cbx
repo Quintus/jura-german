@@ -18,6 +18,7 @@
 % Keine besondere Hervorhebung der Titel, insb. keine
 % Anführungsstriche wie im Standard aus biblatex.def.
 \DeclareFieldFormat{citetitle}{#1}
+\DeclareFieldFormat[book]{citetitle}{#1}
 \DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{citetitle}{#1}
 
 % Format für kursive Nachnamen
@@ -38,7 +39,13 @@
           {}
           {\printnames[last-only-italic]{labelname}%
            \setunit{\nametitledelim}}%
-        \usebibmacro{cite:title}}}%
+        \ifentrytype{book}{% Titel nur für Monografien anzeigen
+          \usebibmacro{cite:title}}
+        {}%
+        \ifentrytype{article}{% Journalinfo nur für Artikel
+          \usebibmacro{journal+issuetitle}%
+        }
+        {}}}%
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citetitle}{%
