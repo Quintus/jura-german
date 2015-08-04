@@ -33,6 +33,9 @@
 \DeclareNameAlias{author}{last-first-italic}
 \DeclareNameAlias{editor}{last-first-italic}
 \DeclareNameAlias{translator}{last-first-italic}
+\DeclareNameAlias{byeditor}{first-last} % Beachte hierzu die
+                                        % Bibmakro-Redefinition von
+                                        % byeditor+others weiter unten.
 
 % Juristen trennen Namen mit /, nicht mit Komma
 \renewcommand*\multinamedelim{\addslash}
@@ -151,5 +154,27 @@
   }
     {#1}
     {#2}}
+
+% Aus nicht näher definierbaren Gründen wird bei den Herausgeberlisten
+% von @incollection-Einträgen im juristischen Bereich nicht etwa die
+% sonst übliche /-Trennung benutzt, sondern die am natürlichen
+% Sprachgebrauch orientierte Trennung mit "," und "und".
+% \multinamedelim und \finalnamedelim müssen daher für diesen einen
+% Eintragstyp anders definiert werden. Das folgende Bibmakro wird
+% meines Wissens nach nur von @incollection benutzt; bis auf die
+% angesprochene Anpassung entspricht es dem Original aus biblatex.def
+% in TeXLive 2015.
+\renewbibmacro*{byeditor+others}{%
+  \renewcommand*\multinamedelim{\addkoma}%
+  \renewcommand*\finalnamedelim{\addspace{}und\addspace{}}%
+  \ifnameundef{editor}
+    {}
+    {\usebibmacro{byeditor+othersstrg}%
+     \setunit{\addspace}%
+     \printnames[byeditor]{editor}%
+     \clearname{editor}%
+     \newunit}%
+  \usebibmacro{byeditorx}%
+  \usebibmacro{bytranslator+others}}
 
 \endinput
