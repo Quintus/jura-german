@@ -751,40 +751,22 @@
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
-  \usebibmacro{volume+number+eid}%
+  \usebibmacro{volume+number+issue+date}%
   \setunit{\addspace}%
-  \usebibmacro{issue+date}%
-  \setunit{\addcolon\space}%
   \usebibmacro{issue}%
   \newunit}
 
-\newbibmacro*{volume+number+eid}{%
-  \printfield{volume}%
-  \setunit*{\adddot}%
-  \printfield{number}%
-  \setunit{\addcomma\space}%
-  \printfield{eid}}
-
-\newbibmacro*{title+issuetitle}{%
-  \usebibmacro{periodical}%
-  \setunit*{\addspace}%
-  \iffieldundef{series}
-    {}
-    {\newunit
-     \printfield{series}%
-     \setunit{\addspace}}%
-  \printfield{volume}%
-  \setunit*{\adddot}%
-  \printfield{number}%
-  \setunit{\addcomma\space}%
-  \printfield{eid}%
-  \setunit{\addspace}%
-  \usebibmacro{issue+date}%
-  \setunit{\addcolon\space}%
-  \usebibmacro{issue}%
-  \newunit}
+\newbibmacro*{volume+number+issue+date}{%
+  \iffieldundef{volume}
+    {\usebibmacro{date}}
+    {\printfield{volume}%
+      \usebibmacro{issue+date}}
+    \setunit*{\adddot}%
+    \printfield{number}%
+}
 
 \newbibmacro*{issue+date}{%
+  \setunit*{\addspace}%
   \printtext[parens]{%
     \iffieldundef{issue}
       {\usebibmacro{date}}
