@@ -19,6 +19,8 @@
 % Anführungszeichen umschlossen setzen.
 \DeclareFieldFormat{title}{#1}
 \DeclareFieldFormat[article,inbook,incollection,inproceedings,patent,thesis,unpublished]{title}{#1\isdot}
+% Zeitschriftentitel sind auch nicht kursiv.
+\DeclareFieldFormat{journaltitle}{#1}
 
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
