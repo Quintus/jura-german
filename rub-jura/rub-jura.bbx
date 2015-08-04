@@ -12,15 +12,21 @@
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
     {\renewbibmacro*{bbx:savehash}{}}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatierung für Einzelfelder
+
 % Abweichung zu authortitle.bbx
 \DeclareFieldFormat{title}{#1}
 
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
 
-\DeclareNameAlias{author}{sortname}
-\DeclareNameAlias{editor}{sortname}
-\DeclareNameAlias{translator}{sortname}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Formatierung für Namenslisten
+
+\DeclareNameAlias{author}{last-first}
+\DeclareNameAlias{editor}{last-first}
+\DeclareNameAlias{translator}{last-first}
 
 \defbibenvironment{bibliography}
   {\list
