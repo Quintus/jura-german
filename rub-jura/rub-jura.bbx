@@ -12,6 +12,9 @@
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
     {\renewbibmacro*{bbx:savehash}{}}}
 
+% Abweichung zu authortitle.bbx
+\DeclareFieldFormat{title}{#1}
+
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
 
