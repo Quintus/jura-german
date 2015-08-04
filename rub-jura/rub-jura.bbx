@@ -159,6 +159,18 @@
     {#1}
     {#2}}
 
+% Herausgeber in Klammern angeben, nicht nach Komma.
+\renewbibmacro*{editor+others}{%
+  \ifboolexpr{
+    test \ifuseeditor
+    and
+    not test {\ifnameundef{editor}}
+  }
+    {\printnames{editor}%
+     \printtext[parens]{\usebibmacro{editor+othersstrg}}%
+     \clearname{editor}}
+    {}}
+
 % Aus nicht näher definierbaren Gründen wird bei den Herausgeberlisten
 % von @incollection-Einträgen im juristischen Bereich nicht etwa die
 % sonst übliche /-Trennung benutzt, sondern die am natürlichen
