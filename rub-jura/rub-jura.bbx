@@ -3,8 +3,23 @@
 
 % Basiert auf authortitle.bbx aus TeXLive 2015.
 
+\newbool{cmtryedition}
+\global\boolfalse{cmtryedition}
+
 \RequireBibliographyStyle{rub-jura-standard}
 \ExecuteBibliographyOptions{pagetracker}
+
+% Neue Option cmtryedit. Wenn true, dann wird die Auflage
+% eines @commentary als hochgestellte Zahl gesetzt. Standard
+% ist false.
+% Funktioniert aber nur bei Kommentaren, die einen shorthand
+% haben, weil nur bei denen eine „zitiert als“-Angabe folgt,
+% bei der man im Literaturverzeichnis die Auflagennummer
+% am shorthand angeben kann.
+\DeclareBibliographyOption{cmtryedit}[false]{%
+  \ifstrequal{#1}{true}
+  {\global\booltrue{cmtryedition}}
+  {\global\boolfalse{cmtryedition}}}
 
 \DeclareBibliographyOption{dashed}[true]{%
   \ifstrequal{#1}{true}
@@ -23,6 +38,12 @@
 \DeclareFieldFormat{booktitle}{#1}
 % Zeitschriftentitel sind auch nicht kursiv.
 \DeclareFieldFormat{journaltitle}{#1}
+
+\DeclareFieldFormat{supedition}{\textsuperscript{#1}}
+\DeclareFieldFormat[commentary]{shorthand}{%
+  \ifbool{cmtryedition}
+    {#1\printfield[supedition]{edition}}
+    {#1}}
 
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
