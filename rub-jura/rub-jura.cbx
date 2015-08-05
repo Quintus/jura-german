@@ -82,9 +82,11 @@
 
 \newbibmacro{rubcite:incollection}{%
   \printnames[last-only-italic]{author}%
-  \setunit{\nametitledelim}
+  \setunit{\nametitledelim}%
   \usebibmacro{in:}%
   \usebibmacro{cite:title}%
+  \newunit%
+  \printfield[onlyfirstpage]{pages}%
 }
 
 % Bei Kommentaren darf der Autorenname nicht kursiv
