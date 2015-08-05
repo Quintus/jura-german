@@ -1,11 +1,15 @@
 \documentclass[11pt,a4paper,DIV=calc]{scrartcl}
 \usepackage[ngerman]{babel}
+\usepackage{csquotes}
 \usepackage[backend=biber,style=rub-jura]{biblatex}
 \usepackage{fontspec}
 \usepackage{listings}
 \usepackage{xspace}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
+
+%\addbibresource{realrefs.bib}
+\addbibresource[label=example]{examples.bib}
 
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
@@ -23,11 +27,14 @@
 \newcommand\rj{\software{rub-jura}\xspace}
 \newcommand\Biblatex{\software{Bib\LaTeX{}}\xspace}
 \newcommand\name[1]{\textit{#1}}
+\newcommand\zB{z.\,B.\xspace}
+
+\newenvironment{rubexample}{\par\vspace{\baselineskip}\hrule\par\begin{refsection}}{\end{refsection}\par\hrule\par\vspace{\baselineskip}}
 
 \KOMAoptions{DIV=last}
 
 \begin{document}
-\title{ruby-jura-doc}
+\title{ruby-jura}
 \subtitle{Juristischer Bibliografierstil}
 \author{Marvin Gülker}
 \date{\today}
@@ -87,6 +94,12 @@ Probleme, die sich nicht ohne weiteres lösen lassen:
   Ich rate von der Nutzung daher für den Moment ab. Wer es dennoch
   wagen will, sollte sowohl den \verb+ibid+- als auch den
   \verb+loccit+-Tracker aktivieren.
+\item \verb+\multinamedelim+ und \verb+\finalnamedelim+ können nicht
+  gefahrlos überschrieben werden, da einige Typen an bestimmten
+  Stellen das Makro intern neu setzen. Der Nutzer dieses Stils wird
+  sich also mit dem Standardaufbau von Namenslisten zufrieden geben
+  müssen (oder so tief in die Interna einsteigen, dass er die
+  betroffenen Bibmakros ändern kann).
 \end{itemize}
 
 Der Stil ist zurzeit „Work in Progress“ und wohl noch lange nicht
@@ -101,7 +114,7 @@ seiner besonderen Vorteile. Unterstützt werden zurzeit die in Tabelle
 \begin{table}
   \centering\ttfamily
 
-  @article @commentary @book @incollection @jurisdiction @misc
+  @article @book @commentary @incollection @jurisdiction @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -174,11 +187,342 @@ Im Gegensatz zum Paket \verb+biblatex-juradiss+ versucht sich dieser
 Stil möglichst dicht an den Bedeutungen der Eintragstypen wie sie in
 der \Biblatex-Dokumentation beschrieben sind zu halten. Damit sollte
 der höchstmögliche Grad an Kompatibilität zu anderen Stilen (zu den
-Ausnahmen siehe Abschnitt \ref{sec:inkompat}) gewährleistet sein.
+Ausnahmen siehe Abschnitt \ref{sec:inkompat}) gewährleistet sein. Für
+die generelle Bedeutung der Typen sei dementsprechend auch auf die
+\Biblatex-Dokumentation verwiesen, hier aufgeführt werden nur die
+besonderen Eigenarten juristischer Literatur.
+
+\subsection{@artice}
+
+Mit \verb+@article+ werden Publikationen in Fachzeitschriften und laut
+\Biblatex-Dokumentation auch Aritkel in Tageszeitungen erfasst (auch
+wenn ich letzteres für unglücklich halte und einen separaten
+Eintragstyp befürworte). Artikel werden stets nach Seitenzahl und
+niemals nach Randnummer zitiert; Einträge dieses Typs geben in der
+Fußnote daher immer die Startseite des Artikels aus, unabhängig davon,
+ob man zusätzlich eine Fundstellenseite über das \verb+postnote+-Feld
+angibt.
+
+\begin{rubexample}
+\begin{verbatim}
+@article{hoernle-huster,
+  author = "Tatjana Hörnle and Stefan Huster",
+  title = "Wie weit reicht das Erziehungsrecht der Eltern?",
+  subtitle = "Am Beispiel der Beschneidung von Jungen",
+  journaltitle = "JZ",
+  year = 2013,
+  pages = "328-339"
+}
+\end{verbatim}
+
+Auch andere Vertreter in der Literatur haben sich für diese
+Herangehensweise ausgesprochen\footcite[330]{hoernle-huster}.
+
+\printbibliography
+\end{rubexample}
 
 \subsection{@book}
 
+Der Eintragstyp \verb+@book+ umfasst Monografien und Lehrbücher.
 
+\begin{rubexample}
+
+\begin{verbatim}
+@book{muscheler,
+  title = "Familienrecht",
+  author = "Karlheinz Muscheler",
+  edition = 3,
+  publisher = "Franz Vahlen",
+  year = 2013,
+  location = "München"
+}
+\end{verbatim}
+
+Der Inhalt des Begriffs „Familie“ ist aus dem Gesetz zu
+beurteilen\footcite[\S\,1 Rnr. 3]{muscheler}.
+
+\printbibliography
+\end{rubexample}
+
+Es ist in der juristischen Fachliteratur üblich, insbesondere die
+meist nur das Rechtsgebiet benennenden Titel von Lehrbüchern in den
+Fußnoten durch einen Kurztitel zu ersetzen. Dies wird unterstützt, im
+Literaturverzeichnis wird selbstverständlich der vollständige Titel
+aufgeführt.
+
+\begin{rubexample}
+\begin{verbatim}
+@book{ipsen,
+  title = "Staatsrecht I",
+  subtitle = "Staatsorganisationsrecht",
+  shorttitle = "StaatsR I",
+  author = "Jörn Ipsen",
+  edition = 25,
+  publisher = "Franz Vahlen",
+  year = 2013,
+  location = "München"
+}
+\end{verbatim}
+
+Die Vertreter der Länder im Bundesrat können ihre Stimmen nur
+einheitlich abgeben\footcite[\S\,7 Rnr. 343ff]{ipsen}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@commentary}
+
+Der Typ \verb+@commentary+ wird von \Biblatex standardmäßig nur wie
+ein Eintrag des Typs \verb+@misc+ behandelt. Dieser Stil dagegen
+setzt einen eigenen \emph{Driver} ein, um der Bedeutung, die diese Art
+von Literatur in der Jurisprudenz hat, auch gerecht zu werden. Leider
+sind sie ebenso wichtig wie komplex, sodass es ein paar Dinge zu
+beachten gibt.
+
+Zunächst einmal werden manche Kommentare nach ihrem Begründer, andere
+nach ihren Herausgebern, und wieder andere nach Eigennamen zitiert
+(„Palandt“, „Jarass/Pieroth“, „Leipziger Kommentar zum
+Strafgesetzbuch“). Kommentare mit Eigennamen müssen im
+Literaturverzeichnis unter diesem Eigennamen einsortiert werden, was
+den Autor dieses Stils vor eine gewisse Herausforderung gestellt
+hat. Die Lösung ist vielleicht nicht ganz sauber, aber durch die Wahl
+der Felder eines \verb+@commentary+ kann der Nutzer dies nun selbst
+beeinflussen: Entweder kann man den Titel über das Feld \verb+title+
+angeben — dann wird der Kommentar nach den Herausgebern einsortiert —,
+oder man kann den Titel über das Feld \verb+maintitle+ angeben. Dann
+wird der Titel als Eigenname behandelt und der Kommentar entsprechend
+einsortiert. Kommentare mit Eigennamen zitiert man zudem nicht mit dem
+vollen Titel, sondern ersetzt die gesamte Kurzzitation durch einen
+einzigen bekannten Begriff, den \verb+shorthand+, den man in solchen
+Fällen zwingend angeben muss (etwa „MüKo“ für den Münchener
+Kommentar). Der Eintrag eines Kommentars im Literaturverzeichnis wird
+bei Vorhandensein des Feldes \verb+shorthand+ ergänzt um eine Angabe
+„zitiert als: \textit{Bearbeiter}, in: Shorthand“.
+
+Zum anderen erhält das Feld \verb+prenote+ bei der Zitation von
+Kommentaren eine besondere Bedeutung, die auch nicht übergangen werden
+kann. Dieses Feld gibt \emph{immer} den Bearbeiter an, und wird in der
+Fußnote automatisch um ein „in:“ ergänzt. Für Kommentare, die nur
+einen einzigen Bearbeiter haben, ist das zwar streng genommen nicht
+erforderlich, doch ist es technisch zu aufwendig, diese Bedingung
+abzuprüfen und davon abhängig das \verb+prenote+-Feld mit der
+Sonderbedeutung zu belegen oder nicht. Außerdem wird so eine gewisse
+Konsistenz erreicht, die zu einer einfach zu merkenden Faustregel
+führt: \emph{Das \texttt{prenote}-Feld darf bei Kommentaren aller Art
+  ausschließlich für die Angabe des Bearbeiters benutzt werden.} Bei
+Kommentaren, die nur einen Bearbeiter haben, darf es folglich
+\emph{gar nicht} benutzt werden. Das \verb+postnote+-Feld ist davon
+unberührt und kann wie sonst auch für Anhängsel aller Art verwandt
+werden.
+
+Wird beim Laden des \software{biblatex}-Pakets die von diesem Stil
+definierte Option \verb+cmtryedit+ angegeben, so wird an den
+\verb+shorthand+ automatisch die Auflage als hochgestellte Zahl
+angehangen.
+
+\begin{rubexample}
+\begin{verbatim}
+@commentary{erman14,
+  title = "Bürgerliches Gesetzbuch, Handkommentar",
+  shorthand = "Erman",
+  editor = {Harm Peter Westermann and Barbara Grunewald
+    and Georg Maier-Reimer},
+  gender = "pm",
+  edition = 14,
+  location = "Köln",
+  year = 2014,
+}
+@commentary{palandt15,
+  title = "Bürgerliches Gesetzbuch mit Nebengesetzen",
+  shorthand = "Palandt",
+  editor = "Otto Palandt",
+  editortype = "founder",
+  gender = "sm",
+  edition = 74,
+  year = 2015,
+  location = "München",
+}
+@commentary{fischer62,
+  title = "Strafgesetzbuch mit Nebengesetzen, Kommentar",
+  shorttitle = "StGB",
+  editor = "Thomas Fischer",
+  gender = "sm",
+  edition = 62,
+  year = 2015,
+  location = "München",
+  publisher = "C.\,H. Beck"
+}
+@commentary{leipzig06,
+  maintitle = "Leipziger Kommentar zum Strafgesetzbuch",
+  shorthand = "LK-StGB",
+  editor = "Heinrich Wilhelm Laufhütte and
+    Ruth Rissing-van Saan and Klaus Tiedemann",
+  edition = 12,
+  location = "Berlin",
+  year = 2006,
+}
+\end{verbatim}
+
+All\footcite[Ellenberger][\S\,12 Rnr. 7]{palandt15}
+überall\footcite[Grunewald][\S\,12 Rnr. 6]{erman14}
+auf den
+Tannenspitzen\footcites[][\S\,242 Rnr. 10]{fischer62}[Laufhütte][\S\,242\,Rnr. 15]{leipzig06}\ldots
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@incollection}
+
+Bei einer \verb+@collection+ handelt es sich um einen Sammelband,
+meist eine Fest- oder Gedächtnisschrift. Eher selten verweist man auf
+eine solche als Ganze, sondern zitiert aus den einzelnen,
+selbstständigen Beiträgen, die mit dem Typ \verb+@incollection+
+erfasst werden. Dieser Typ weist eine besonders schwierige
+Formatierung im Literaturverzeichnis auf, denn aus unbekannten Gründen
+werden die Herausgeber einer Festschrift nicht wie sonst üblich mit
+Schrägstrichen / getrennt, sondern vielmehr in einer Satzkonstruktion
+mit Komma und „und“ aufgelistet. Intern nutzt dieser Typ daher eine
+eigene Definition der Makros \verb+\multinamedelim+ und
+\verb+\finalnamedelim+.
+
+\emph{Keine} \verb+@incollection+ sind etwa Anwaltshandbücher, die
+auch meist nicht — wie von diesem Typ vorgesehen — mit Seite sondern
+mit Randnummer zitiert werden. Für sie wäre wohl \verb+@inbook+
+angebrachter.
+
+Da dieser Typ zwangsweise die Startseite des zitierten Artikels
+ausgibt, kann er nicht für den Verweis auf nicht nach Seitenzahlen
+zitierten Publikationen herangezogen werden.
+
+Einträge des Typs \verb+@incollection+ müssen einen \verb+shorttitle+
+haben, um korrekt und vorgabenkonform zu funktionieren. Alle Fest- und
+Gedächtnisschriften besitzen einen solchen: „FS Geehrter“ bzw. „GS
+Geehrter“.
+
+\begin{rubexample}
+\begin{verbatim}
+@incollection{germann,
+  author = "Michael Germann",
+  title = "Der menschliche Körper als Gegenstand der
+    Religionsfreiheit",
+  pages = "35-58",
+  editor = "Bernd-Rüdiger Kern and Hans Lilie",
+  booktitle = "Jurisprudenz zwischen Medizin und Kultur.
+    Festschrift zum 70. Geburtstag von Gerfried Fischer.",
+  shorttitle = "FS Fischer",
+  location = "Frankfurt am Main",
+  year = 2010
+}
+\end{verbatim}
+
+Ein Beispielsatz mit Beispieltext\footcite[41]{germann}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@jurisdiction}
+
+Ähnlich schwierig wie \verb+@commentary+ war die Implementierung von
+\verb+@jurisdiction+. Das Besondere an Rechtsprechung ist, dass sie
+üblicherweise nicht in das Literaturverzeichnis aufgenommen wird;
+dieser Stil unterstützt das aber nichtsdestotrotz. Es ist bei der
+Verwendung dieses Typs daher darauf zu achten, den Aufruf von
+\verb+\printbibliography+ so zu gestalten, dass er Einträge des Typs
+\verb+@jurisdiction+ ausschließt:
+
+\begin{verbatim}
+\printbibliography[nottype=jurisdiction]
+\end{verbatim}
+
+Dieser Typ benötigt weitaus mehr Informationen, als sich mit den von
+\Biblatex unterstützten Standardfeldern erfassen lässt. Daher hat der
+Autor für diesen Typ \emph{zusätzliche} Felder definiert, die von
+\Biblatex \emph{sonst nicht unterstützt} werden. Diese zusätzlichen
+Felder lauten:
+
+\begin{description}
+\item[az] \emph{(literal)} Das Aktenzeichen des Urteils.
+\item[primaer] \emph{(literal, erforderlich)} Primäre
+  Fundstelle. Hierbei kann es sich entweder um eine Fundestelle in der
+  amtlichen Sammlung des erkennenden Gerichtes („BGHZ 123, 45“) oder
+  um eine Fundstelle in einer der größeren juristischen
+  Fachzeitschriften handeln („NJW 1999, 1111“). Gibt es eine
+  Fundstelle in der amtlichen Sammlung, ist diese \emph{immer} die
+  primäre Fundstelle.
+\item[sekundaer] \emph{(literal)} Sekundäre Fundstelle. Zusätzlich zur
+  primären Fundstelle kann das Urteil außerdem in der hier angegebenen
+  Zeitschrift gefunden werden (\zB „FamRZ 2000, 2222“). Die sekundäre
+  Fundstelle wird von diesem Stil automatisch mit einem
+  Gleichheitszeichen = eingeleitet.
+\end{description}
+
+Die sonst zulässigen Felder werden von \Biblatex unterstützt, sodass
+ihre Typen der \Biblatex-Dokumentation entnommen werden können, sofern
+hier nichts spezielleres angegeben ist. Sie lauten:
+
+\begin{description}
+\item[author] \emph{(erforderlich)} Das erkennende Gericht („BGH“, „AG Klagenfurt“)
+\item[date] \emph{(erforderlich)} Datum der Entscheidung.
+\item[options] Siehe dazu unten.
+\item[title] Manche Entscheidungen werden vom erkennenden Gericht oder
+  der interessierten Fachöffentlichkeit mit einem mehr oder weniger
+  geistreichen Titel versehen („Herrenreiter“, „Elfes“,
+  „Bearshare“). Dieser kann hier angegeben werden und wird dann im
+  Literaturverzeichnis automatisch mit einem
+  vorangehenden Halbgeviertstrich angeführt.
+\item[type] \emph{(erforderlich)} „Urteil“, „Beschluss“ oder
+  „Entscheidung“.
+\end{description}
+
+Der primären Fundstelle ist nicht anzusehen, ob sie amtlich ist oder
+nicht, was aber für die Zitation ein wesentliches Kriterium ist: denn
+ist die Fundstelle amtlich, wird die Entscheidung statt mit dem
+Gerichtsnamen mit dem Namen der amtlichen Sammlung zitiert („BGHZ\ldots“
+statt „BGH BGHZ\ldots“). Um diese Information zu erfassen, stellt
+dieser Stil eine Option \verb+primamtl+ bereit. Enthält ein Eintrag
+des Typs \verb+@jurisdiction+ diese Option, so wird die primäre
+Fundstelle als amtliche behandelt. Ein Beispiel findet sich unten.
+
+Abhängig von der Paketoption \verb+morejurisdict+ sind die Fußnoten zu
+den Entscheidungen mehr oder weniger ausführlich. Fehlt die Option,
+beschränkt sich die Fußnote auf das erkennende Gericht bzw. die
+amtliche Sammlung und die Startseite, wird sie angegeben, dann werden
+die sekundäre Fundstelle und der Titel ebenfalls gesetzt. Letzteres
+verhindert leider den effektiven Einsatz des \verb+postnote+-Feldes,
+da eine dort angegebene Seitenzahl dann einsam hinter dem Titel einer
+Entscheidung landet. Kommt man freilich ohne Angabe einer exakten
+Fundstellenseite aus, so kann man die Option \verb+morejurisdict+
+getrost aktivieren und erhält so erheblich elegantere Fußnoten.
+
+\begin{rubexample}
+\begin{verbatim}
+@jurisdiction{lg-koeln-njw-2012-2128,
+  author = {{LG Köln}},
+  gender = "sn",
+  date = "2012-05-07",
+  type = "Urteil",
+  az = "Ns 169/11",
+  primaer = "NJW 2012, 2128",
+  sekundaer = "FamRZ 2012, 1421"
+}
+@jurisdiction{bverfge-24-236,
+  author = "BVerfG",
+  gender = "sn",
+  date = "1968-10-16",
+  type = "Entscheidung",
+  az = "1 BvR 241/66",
+  primaer = "BVerfGE 24, 236",
+  sekundaer = "NJW 1967, 1234",
+  title = "Fiktivtitel",
+  options = {primamtl}
+}
+\end{verbatim}
+
+Das haben auch schon diverse\footcite[2129]{lg-koeln-njw-2012-2128}
+Gerichte erkannt\footcite{bverfge-24-236}.
+
+\printbibliography
+\end{rubexample}
 
 \end{document}
 
