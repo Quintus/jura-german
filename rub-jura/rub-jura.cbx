@@ -38,6 +38,12 @@
 \DeclareNameFormat{last-only-italic}{\usebibmacro{name:last}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}}
 \DeclareNameFormat{last-only}{\usebibmacro{name:last}{#1}{#3}{#5}{#7}}
 
+% Neue Eintragsoption primamtl: Wenn gesetzt, ist die primäre
+% Fundstelle amtlich. Dann wird sie ohne Gerichtsangabe zitiert
+% (also etwa BVerfGE, BGHZ, etc.).
+\newtoggle{primamtl}
+\DeclareEntryOption{primamtl}[true]{\settoggle{primamtl}{#1}}
+
 \DeclareBibliographyOption{ibidpage}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{loccittracker=constrict}}
@@ -84,7 +90,19 @@
 }
 
 \newbibmacro{rubcite:jurisdiction}{%
-  \printnames[last-only-italic]{author}%
+  \iftoggle{primamtl}%
+    {\printfield{primaer}}%
+    {\printnames[last-only-italic]{author}%
+     \setunit{\addspace}%
+     \printfield{primaer}}%
+  \iffieldundef{sekundaer}%
+    {}%
+    {\setunit{\addspace{}=\addspace{}}%
+     \printfield{sekundaer}}%
+   \setunit{\addspace{}—\addspace{}}%
+   \iffieldundef{title}%
+     {}%
+     {\printfield{title}}%
 }
 
 \newbibmacro{rubcite:misc}{%

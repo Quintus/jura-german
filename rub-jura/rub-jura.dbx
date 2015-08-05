@@ -12,7 +12,8 @@
 %   type = "Urteil",
 %   az = "XII ZA 123/98",
 %   primaer = "BGHZ 55, 12",
-%   sekundaer = "NJW 1999, 1234"
+%   sekundaer = "NJW 1999, 1234",
+%   options = {primamtl}
 % }
 
 \DeclareDatamodelFields[type=field,datatype=literal]{az}
