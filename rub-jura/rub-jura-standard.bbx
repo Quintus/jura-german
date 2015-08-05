@@ -761,6 +761,32 @@
     {}%
   \usebibmacro{finentry}}
 
+\DeclareBibliographyDriver{jurisdiction}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \printnames{author}%
+  \newunit\newblock
+  \printfield{type}
+  \printtext{v.\addspace}%
+  \printdate{}%
+  \newunit\newblock
+  \printfield{az}%
+  \newunit\newblock
+  \printfield{primaer}%
+  \iffieldundef{sekundaer}
+    {}
+    {\setunit{\addspace=\addspace}\printfield{sekundaer}}%
+  \setunit{\addspace—\addspace}\newblock
+  \iffieldundef{title}
+    {}
+    {\printfield{title}}%
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
+
 \DeclareBibliographyAlias{mvbook}{book}
 \DeclareBibliographyAlias{bookinbook}{inbook}
 \DeclareBibliographyAlias{suppbook}{inbook}
