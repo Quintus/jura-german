@@ -12,6 +12,9 @@
 \newbool{cbx:parens}
 \newbool{cbx:loccit}
 \newbool{cbx:cmtryineditor}
+\newbool{cbx:morejurisdict}
+
+\global\boolfalse{cbx:morejurisdict}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Feldanpassungen
@@ -43,6 +46,15 @@
 % (also etwa BVerfGE, BGHZ, etc.).
 \newtoggle{primamtl}
 \DeclareEntryOption{primamtl}[true]{\settoggle{primamtl}{#1}}
+
+% Neue Paketoption morejurisdict: Wenn true, werden
+% Sekundärfundstellen und der Titel auch in Fußnoten ausgegeben. Das
+% kann zu Verwirrung bei Seitenzahlangaben führen, daher ist der
+% Standard false.
+\DeclareBibliographyOption{morejurisdict}[true]{%
+  \ifstrequal{#1}{true}%
+    {\global\booltrue{cbx:morejurisdict}}%
+    {\global\boolfalse{cbx:morejurisdict}}}
 
 \DeclareBibliographyOption{ibidpage}[true]{%
   \ifstrequal{#1}{true}
@@ -95,14 +107,16 @@
     {\printnames[last-only-italic]{author}%
      \setunit{\addspace}%
      \printfield{primaer}}%
-  \iffieldundef{sekundaer}%
-    {}%
-    {\setunit{\addspace{}=\addspace{}}%
-     \printfield{sekundaer}}%
-   \setunit{\addspace{}—\addspace{}}%
-   \iffieldundef{title}%
+   \ifbool{cbx:morejurisdict}%
+     {\iffieldundef{sekundaer}%
+       {}%
+       {\setunit{\addspace{}=\addspace{}}%
+        \printfield{sekundaer}}%
+      \setunit{\addspace{}—\addspace{}}%
+      \iffieldundef{title}%
+        {}%
+        {\printfield{title}}}%
      {}%
-     {\printfield{title}}%
 }
 
 \newbibmacro{rubcite:misc}{%
