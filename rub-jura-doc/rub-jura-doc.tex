@@ -1,0 +1,188 @@
+\documentclass[11pt,a4paper,DIV=calc]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage[backend=biber,style=rub-jura]{biblatex}
+\usepackage{fontspec}
+\usepackage{listings}
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\setmainfont{Linux Libertine O}
+\setsansfont{Linux Biolinum O}
+
+%\definecolor{darkblue}{rgb}{03039d}
+
+\renewcommand\thesection{\Roman{section}}
+\renewcommand\thesubsection{\arabic{subsection}}
+
+\addtokomafont{section}{\color{blue}}
+\lstloadlanguages{[latex]tex}
+\lstset{basicstyle=\ttfamily,language=tex}
+
+\newcommand\software[1]{\textsf{#1}}
+\newcommand\rj{\software{rub-jura}\xspace}
+\newcommand\Biblatex{\software{Bib\LaTeX{}}\xspace}
+\newcommand\name[1]{\textit{#1}}
+
+\KOMAoptions{DIV=last}
+
+\begin{document}
+\title{ruby-jura-doc}
+\subtitle{Juristischer Bibliografierstil}
+\author{Marvin Gülker}
+\date{\today}
+\maketitle{}
+
+\tableofcontents{}
+
+\section{Einführung}
+
+Bei \rj handelt es sich um einen Bibliografier- und Zitierstil für das
+\Biblatex-System. Er ist nicht für das veraltete \software{Bib\TeX{}}
+gedacht und funktioniert mit diesem auch nicht.
+
+Ich habe diesen Stil geschrieben, weil keine vorhandenen Stile den mir
+gemachten Vorgaben entsprachen. Dicht heran kam das Paket
+\software{biblatex-juradiss} von Dr. \name{Tobias Pfeiffer}, welches
+aber nicht mehr gepflegt wird und zudem zusätzlich von
+\software{biblatex-dw} abhängt. Der vorliegende Stil ist unabhängig
+von dritten Paketen und hängt nur von \Biblatex selbst ab.
+
+Wie in ähnlich gelagerten Stilen tauchen bei der Zitierweise deutscher
+Juristen gewisse Probleme auf, die man am besten so beschreiben kann:
+Sie ist überhaupt nicht einheitlich. Selbst innerhalb eines
+Eintragstyps werden manche Werke gänzlich anders zitiert als andere,
+als Beispiel seien Gerichtsentscheidungen genannt, die normalerweise
+mit dem Gericht zuerst zitiert werden — außer die Entscheidung wurde
+in einer amtlichen Sammlung veröffentlicht. Dann tritt diese an die
+Stelle des Gerichts. Außer im Literaturverzeichnis, wo dies nicht ins
+Gewicht fällt. Kommentare als spezifisch juristische Literatur sind
+ohnehin ein Spezialfall.
+
+\section{Einschränkungen}
+
+Dieser Stil funktioniert für mich, was aber noch lange nicht heißt,
+dass er für andere Leute geeignet ist. Er kommt den Vorgaben an der
+juristischen Fakultät der Ruhruniversität Bochum nach. Abgesehen von
+diesen äußeren Beschränkungen gibt es aber einige handfeste technische
+Probleme, die sich nicht ohne weiteres lösen lassen:
+
+\begin{itemize}
+\item Bei Angabe der Option \verb+morejurisdict+ ist das
+  \verb+postnote+-Feld eines \verb+@jurisdiction+-Eintrags nicht
+  sinnvoll als bloße Seitenangabe verwendbar, da nicht klar ist,
+  worauf die Zahl sich bezieht.
+\item Für Zitate aus Einträgen des Typs \verb+@commentary+ hat das
+  \verb+prenote+-Feld eine besondere Bedeutung: Es gibt den Bearbeiter
+  an. Es steht — auch bei Kommentaren, die nur einen Bearbeiter haben,
+  wie etwa dem \emph{Fischer} zum Strafgesetzbuch — nicht für andere
+  Anmerkungen zur Verfügung und wird bei Nutzung automatisch mit einem
+  nachfolgenden „in:“ versehen.
+\item Die \verb+ibidem+-Funktion ist nur etwas für Mutige. Juristen
+  kennen keine „ebd.“-Angabe, sondern arbeiten mit einer eigenwilligen
+  Fassung von „a.\,a.\,O.“, die in diesem Stil sogar grundlegend umgesetzt
+  wurde („\textit{Muscheler} a.\,a.\,O.“). Sie schlägt jedoch für Einträge
+  des Typs \verb+@commentary+ fehl.
+
+  Ich rate von der Nutzung daher für den Moment ab. Wer es dennoch
+  wagen will, sollte sowohl den \verb+ibid+- als auch den
+  \verb+loccit+-Tracker aktivieren.
+\end{itemize}
+
+Der Stil ist zurzeit „Work in Progress“ und wohl noch lange nicht
+fertig. Es ist daher durchaus möglich, dass die obigen Restriktionen
+noch aufgehoben werden. Auch weise ich darauf hin, dass die minutiöse
+Anpassung der Fußnoten auf die jeweiligen Eintragstypen nicht
+vollständig ist, was ich aber gern noch nacharbeiten will. Schließlich
+ist die große Menge von \Biblatex unterstützter Eintragstypen einer
+seiner besonderen Vorteile. Unterstützt werden zurzeit die in Tabelle
+\ref{tab:unterstuetzte-typen} aufgeführten Eintragstypen.
+
+\begin{table}
+  \centering\ttfamily
+
+  @article @commentary @book @incollection @jurisdiction @misc
+
+  \caption{Unterstützte Eintragstypen}
+  \label{tab:unterstuetzte-typen}
+\end{table}
+
+\section{Inkompatibilitäten}\label{sec:inkompat}
+
+Die ungewöhnliche Zitierweise deutscher Juristen bringt es mit sich,
+dass dieser Stil nur begrenzt kompatibel mit anderen Stilen ist. Ich
+habe mich sogar gezwungen gesehen, von \Biblatex{}s erweiterten
+Funktionalitäten Gebrauch zu machen und neue Felder und Optionen für
+die Bibliografiedateien zu definieren. Dies betrifft vornehmlich den
+Eintragstyp \verb+@jurisdiction+, der im Standardreportoire von
+\Biblatex aber ohnehin nur als „nicht unterstützt“ aufgeführt wird und
+dementsprechend wenig Gefahr läuft, mit einem anderen Stil zu
+kollidieren. Ähnlich liegt es bei der Auswertung der Felder eines
+\verb+@commentary+.
+
+Dieser Stil greift auf Funktionalitäten von \Biblatex zurück, die
+ausschließlich mit \software{Biber} als Backend gewährleistet
+sind. Ein Einsatz von \software{Bib\TeX{}} verbietet sich somit.
+
+Außerdem definiert dieser Stil einige neue Paketoptionen, die von
+anderen Stilen nicht verstanden werden:
+
+\begin{itemize}
+\item \verb+morejurisdict+
+\item \verb+cmtryedit+
+\end{itemize}
+
+\section{Einbindung}
+
+Es handelt sich um einen \Biblatex-Stil, daher erfolgt die Einbindung
+wie bei jedem anderen \Biblatex-Stil auch.
+
+\begin{lstlisting}
+\usepackage[backend=biber,style=rub-jura]{biblatex}
+\end{lstlisting}
+
+\section{Paketoptionen}
+
+Dieses Paket definiert einige neue Paketoptionen, die beim Latex des
+\verb+biblatex+-Pakets angegeben werden können.
+
+\begin{description}
+\item[morejurisdict] Wird ein \verb+@jurisdiction+-Eintrag zitiert, so
+  wird die Fußnote mit erweiterten Informationen (Sekundäre Fundstelle
+  und Titel, so weit verfügbar) angereichert. In der Folge kann die
+  Verwendung des \verb+postnote+Feldes schwierig lesbare Resultate
+  hervorbringen.
+\item[cmtryedit] Kommentare, die über einen \verb+shorthand+ zitiert
+  werden, werden um die Auflage in Form einer hochgestellten
+  Zahl\textsuperscript{42} erweitert. Dies ist normalerweise
+  überflüssig, kann aber bei der Zitierung aus unterschiedlichen
+  Auflagen desselben Kommentars eine praktische Zusatzinformation
+  sein.
+
+  Kommentare ohne \verb+shorthand+ sind von dieser Option nicht
+  betroffen. Das liegt daran, dass kein „zitiert als“-Eintrag im
+  Literaturverzeichnis folgt, mit dem man die Zuordnung verdeutlichen
+  könnte. Es handelt sich mithin um eine Designentscheidung, nicht um
+  eine Fehlfunktion. Wer die Auflage bei allen Kommentaren setzen
+  möchte, kann für jeden Kommentar einen \verb+shorthand+ etwa in Form
+  der Autorennachnamen (etwa „Jarass/Pieroth“) definieren.
+\end{description}
+
+\section{Einzelne Eintragstypen}
+
+Im Gegensatz zum Paket \verb+biblatex-juradiss+ versucht sich dieser
+Stil möglichst dicht an den Bedeutungen der Eintragstypen wie sie in
+der \Biblatex-Dokumentation beschrieben sind zu halten. Damit sollte
+der höchstmögliche Grad an Kompatibilität zu anderen Stilen (zu den
+Ausnahmen siehe Abschnitt \ref{sec:inkompat}) gewährleistet sein.
+
+\subsection{@book}
+
+
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

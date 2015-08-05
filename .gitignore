@@ -1,1 +1,9 @@
 auto/
+rub-jura-doc/*.log
+rub-jura-doc/*.aux
+rub-jura-doc/*.bcf
+rub-jura-doc/*.log
+rub-jura-doc/*.out
+rub-jura-doc/*.pdf
+rub-jura-doc/*.xml
+rub-jura-doc/*.toc
