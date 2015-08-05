@@ -99,8 +99,16 @@
 \newbibmacro*{cite:shorthand}{%
   \printtext[bibhyperref]{\printfield{shorthand}}}
 
+% Juristen benutzen kein „ebd.“, sondern immer den Autorennamen
+% gefolgt von „a.a.O.“. „a.a.O.“ im klassischen Sinne (wie ihn
+% Biblatex’ loccittracker versteht), also Verweis auf eine
+% vorangehende Vollzitation, gibt es nur in Zeitschriften ohne eigenes
+% Literaturverzeichnis pro Artikel, und wird dort auch nicht als
+% „a.a.O.“ geführt, sondern als „siehe Fußnote X auf Seite Y“.
 \newbibmacro*{cite:ibid}{%
-  \printtext[bibhyperref]{\bibstring[\mkibid]{ibidem}}%
+  \printnames[last-only-italic]{labelname}%
+  \newunit
+  \printtext[bibhyperref]{\bibstring{opcit}}% „opcit“ statt „ibidem“
   \ifloccit
     {\global\booltrue{cbx:loccit}}
     {}}
