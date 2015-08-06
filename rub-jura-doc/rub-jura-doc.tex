@@ -118,7 +118,7 @@ weitere Informationen diesbezüglich sei auf die
 \begin{table}
   \centering
 
-  @article @book @commentary @inbook @incollection @jurisdiction @manual @misc
+  @article @book @commentary @inbook @incollection @inproceedings @jurisdiction @manual @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -516,6 +516,57 @@ Geehrter“.
 \end{verbatim}
 
 Ein Beispielsatz mit Beispieltext\footcite[41]{germann}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@inproceedings}
+
+Der Typ \verb+@inproceedings+ erfasst Kompilationen von
+Konferenzvorträgen. Er ist etwa einschlägig, wenn anlässlich eines
+bestimmten Termins in umfangreichen Vorträgen über ein bestimmtes
+Thema referiert wird und die jeweiligen Sprecher ihre Ergebnisse in
+einem speziell auf die Konferenz zugeschnittenen Artikel
+zusammenfassen, und diese Artikel von einem Herausgeber gesammelt und
+als Konferenzband herausgegeben werden. Maßgebliches Kennzeichen
+dieser Art von Publikation ist ihre enge Bindung an das
+Veranstaltungsereignis, die sich auch in der Angabe zahlreicher die
+Veranstaltung betreffender Felder (\verb+eventtitle+,
+\verb+eventdate+, \verb+venue+, \verb+organization+) manifestiert.
+
+Keine Konferenzen sind die Debatten der gesetzgebenden Organe und
+ihrer Ausschüsse, hierfür ist der Eintragstyp \verb+@legislation+
+vorzuziehen.
+
+Für die Fußnoten bewegt sich dieser Typ zwischen \verb+@incollection+
+und \verb+@inbook+. Genauso wie der erstere kann dieser Typ nur mit
+Seitenzahl zitiert werden (weil die Startseite automatisch mit
+ausgegeben wird), weist aber nicht auch dessen Erfordernis eines
+\verb+shorttitle+ auf. Vielmehr wird der gewöhnliche \verb+booktitle+
+genutzt.
+
+\begin{rubexample}
+\begin{verbatim}
+@inproceedings{konferenzband,
+  eventtitle = "8. Bayreuther Forum für Wirtschafts-
+    und Medienrecht",
+  eventdate = "2012-01-27/2012-01-28",
+  venue = "Bayreuth",
+  organization = "Forschungsstelle für Wirtschafts-
+    und Medienrecht an der Universität Bayreuth",
+  booktitle = "Der Schutz des Geistigen Eigentums
+    im Internet",
+  editor = "Stefan Leible",
+  date = "2012",
+  location = "Tübingen",
+  author = "Jan Eichelberger",
+  title = "Urheberrecht und Streaming",
+  pages = "17-46",
+}
+\end{verbatim}
+
+Neuerlich kommt dieses Thema immer stärker zur
+Sprache\footcite[25]{konferenzband}.
 
 \printbibliography
 \end{rubexample}
