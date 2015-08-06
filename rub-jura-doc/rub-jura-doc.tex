@@ -113,7 +113,7 @@ können funktionieren, müssen aber nicht.
 \begin{table}
   \centering\ttfamily
 
-  @article @book @commentary @incollection @jurisdiction @manual @misc
+  @article @book @commentary @inbook @incollection @jurisdiction @manual @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -410,6 +410,43 @@ All\footcite[Ellenberger][\S\,12 Rnr. 7]{palandt15}
 überall\footcite[Grunewald][\S\,12 Rnr. 6]{erman14}
 auf den
 Tannenspitzen\footcites[][\S\,242 Rnr. 10]{fischer62}[Laufhütte][\S\,242\,Rnr. 15]{leipzig06}\ldots
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@inbook}
+
+Gelegentlich kommt es vor, dass innerhalb eines Buches klar nach Autor
+und Titel abgrenzbare Abschnitte vorliegen, ohne dass das Buch ein
+Sammelband (etwa eine Festschrift) im Sinne einer \verb+@incollection+
+wäre. Das ist typischerweise bei Anwaltshandbüchern der Fall. Für diese
+Art von Literatur empfiehlt sich \verb+@inbook+, welches im Gegensatz
+zu \verb+@incollection+ auch nicht zwangsweise mit einer Seitenangabe
+zitiert werden muss (da \verb+@incollection+ stets die Startseite des
+Beitrags in der Fußnote mit ausgibt, dieser Typ dies jedoch nicht
+tut).
+
+Für diesen Typ empfiehlt sich die Angabe des Feldes
+\verb+chapter+. Sie führt (übrigens auch bei anderen Typen) dazu, dass
+der dort angegebene Text vor der Seitenzahl im Literaturverzeichnis
+landet und die Seitenzahl in Klammern dahinter. Ohne das Feld wird die
+Seitenzahl ohne Klammern ausgegeben.
+
+\begin{rubexample}
+\begin{verbatim}
+@inbook{handbuch,
+  author = "Max Mustermann",
+  title = "Verträge im Kauf- und Werkvertragsrecht",
+  booktitle = "Anwaltshandbuch für diverses Recht",
+  pages = "110-195",
+  chapter = "\S\,23",
+  editor = "Keiner Niemand and Sonst Wer",
+  location = "Frankfurt an der Oder",
+  year = 1999
+}
+\end{verbatim}
+
+Die Praxis hält es ganz ähnlich\footcite[\S\,23 Rnr.\,55]{handbuch}.
 
 \printbibliography
 \end{rubexample}
