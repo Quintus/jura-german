@@ -107,16 +107,36 @@ Anpassung der Fußnoten auf die jeweiligen Eintragstypen nicht
 vollständig ist, was ich aber gern noch nacharbeiten will. Schließlich
 ist die große Menge von \Biblatex unterstützter Eintragstypen einer
 seiner besonderen Vorteile. Unterstützt werden zurzeit die in Tabelle
-\ref{tab:unterstuetzte-typen} aufgeführten Eintragstypen; andere Typen
-können funktionieren, müssen aber nicht.
+\ref{tab:unterstuetzte-typen} aufgeführten primären Eintragstypen;
+andere Typen können funktionieren, müssen aber nicht. Daneben gibt es
+noch einige Aliastypen, \dh Typen, die selbst nur Verweise auf einen
+anderen Typ sind, die aber aus logischen Gründen vorzuziehen
+sind. Diese werden in Tabelle \ref{tab:aliastypen} aufgelistet; für
+weitere Informationen diesbezüglich sei auf die
+\Biblatex-Do\-ku\-men\-ta\-tion verweisen.
 
 \begin{table}
-  \centering\ttfamily
+  \centering
 
   @article @book @commentary @inbook @incollection @jurisdiction @manual @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
+\end{table}
+
+\begin{table}
+  \centering
+  \begin{tabular}{ll}
+    \textbf{Name} & \textbf{Alias für}\\
+    \hline
+    @mvbook         & @book\\
+    @bookinbook     & @book\\
+    @suppbook       & @book\\
+    @mvcollection   & @collection\\
+    @suppcollection & @collection
+  \end{tabular}
+  \caption{Aliastypen}
+  \label{tab:aliastypen}
 \end{table}
 
 \section{Inkompatibilitäten}\label{sec:inkompat}
