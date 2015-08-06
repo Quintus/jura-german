@@ -797,6 +797,62 @@
     {}%
   \usebibmacro{finentry}}
 
+% Deutscher Bundestag, Entwurf eines tollen Gesetzes, Drucksache
+% 00/12345 v. 1. Januar 2000; zitiert als: BT-Drs. 00/12345.
+\DeclareBibliographyDriver{legislation}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \printnames[last-only-italic]{author}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{maintitle+title}%
+  \newunit
+  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{edition}%
+  \newunit
+  \iffieldundef{maintitle}
+    {\printfield{volume}%
+     \printfield{part}}
+    {}%
+  \newunit
+  \printfield{volumes}%
+  \newunit\newblock
+  \printfield{type}%
+  \setunit{\addspace}
+  \printfield{number}%
+  \setunit{\addspace}
+  \printtext{v.\space}%
+  \printdate%
+  \newunit\newblock%
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \iftoggle{bbx:isbn}
+    {\printfield{isbn}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \iffieldundef{shorthand}
+    {}
+    {\setunit{\addsemicolon\addspace}\newblock
+      \printtext{\zitiertals{} \printfield{shorthand}}}
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
 
 \DeclareBibliographyAlias{mvbook}{book}
 \DeclareBibliographyAlias{bookinbook}{inbook}
