@@ -119,7 +119,7 @@ weitere Informationen diesbezüglich sei auf die
   \centering
 
   @article @book @commentary @inbook @incollection @inproceedings
-  @jurisdiction @legislation @manual @misc
+  @jurisdiction @legislation @manual @misc @report @thesis
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -770,6 +770,43 @@ fallen hierunter.
 
 \Biblatex unterstützt eine Menge verschiedener Felder für die
 jeweiligen Eintragstypen\footcite[2.2.2]{biblatex}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@report}
+
+Juristische „Forschungsberichte“ bezeichnet man üblicherweise als
+\emph{Gutachten}, und für sie dient der Typ \verb+@report+. Zuweilen
+kann es aber auch von Interesse sein, aus nichtjuristischen Studien zu
+zitieren, und auch dafür ist \verb+@report+ der korrekte Eintragstyp
+wie überhaupt für alles, was das Ergebnis einer wissenschaftlichen
+Untersuchung ist.
+
+\begin{rubexample}
+\begin{verbatim}
+@report{studie,
+  author = "Hans-Jörg Albrecht and Philip Bruns
+    and Els de Busser and Volker Grundies and
+    Michael Kilching and Johanna Rinceanu and
+    Brigitte Kenzel and Nina Nikolova and
+    Sophie Rotino and Moritz Tauschwitz",
+  title = "Schutzlücken durch Wegfall der
+    Vorratsdatenspeicherung?",
+  subtitle = "Eine Untersuchung zu Problemen der
+    Gefahrenabwehr und Strafverfolgung bei Fehlen
+    gespeicherter Telekommunikationsverkehrsdaten",
+  type = "Gutachten",
+  institution = "Max-Planck-Institut für ausländisches
+    und internationales Strafrecht",
+  year = 2011,
+  location = "Freiburg im Breisgau"
+}
+\end{verbatim}
+
+Die Vorratsdatenspeicherung hat keinen nachweisbaren positiven Effekt
+auf die Aufklärungsquote von Straftaten, Einzelfälle werden ohne
+Grundlage als „typisch“ deklariert\footcite[218f.]{studie}.
 
 \printbibliography
 \end{rubexample}
