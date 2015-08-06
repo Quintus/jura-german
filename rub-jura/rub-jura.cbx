@@ -105,15 +105,15 @@
 
 \newbibmacro{rubcite:jurisdiction}{%
   \iftoggle{primamtl}%
-    {\printfield{primaer}}%
+    {\printfield{primary}}%
     {\printnames[last-only-italic]{author}%
      \setunit{\addspace}%
-     \printfield{primaer}}%
+     \printfield{primary}}%
    \ifbool{cbx:morejurisdict}%
-     {\iffieldundef{sekundaer}%
+     {\iffieldundef{secondary}%
        {}%
        {\setunit{\addspace{}=\addspace{}}%
-        \printfield{sekundaer}}%
+        \printfield{secondary}}%
       \setunit{\addspace{}—\addspace{}}%
       \iffieldundef{title}%
         {}%

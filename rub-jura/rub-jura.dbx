@@ -11,13 +11,13 @@
 %   title = "Fiktiver Titel",
 %   type = "Urteil",
 %   az = "XII ZA 123/98",
-%   primaer = "BGHZ 55, 12",
-%   sekundaer = "NJW 1999, 1234",
+%   primary = "BGHZ 55, 12",
+%   secondary = "NJW 1999, 1234",
 %   options = {primamtl}
 % }
 
 \DeclareDatamodelFields[type=field,datatype=literal]{az}
-\DeclareDatamodelFields[type=field,datatype=literal]{primaer}
-\DeclareDatamodelFields[type=field,datatype=literal]{sekundaer}
+\DeclareDatamodelFields[type=field,datatype=literal]{primary}
+\DeclareDatamodelFields[type=field,datatype=literal]{secondary}
 
 \endinput
