@@ -97,6 +97,13 @@
   \printfield[onlyfirstpage]{pages}%
 }
 
+\newbibmacro{rubcite:inbook}{%
+  \printnames[last-only-italic]{author}%
+  \setunit{\nametitledelim}%
+  \usebibmacro{in:}%
+  \printfield{booktitle}%
+  \newunit}
+
 % Bei Kommentaren darf der Autorenname nicht kursiv
 % sein (das ist schon der Bearbeiter, siehe Redefinition des
 % prenote-Bibmakros). Ist aber der Autor eines Kommentars sein
@@ -148,13 +155,15 @@
           {\usebibmacro{rubcite:book}}{%
         \ifentrytype{article}%
           {\usebibmacro{rubcite:article}}{%
+        \ifentrytype{inbook}%
+          {\usebibmacro{rubcite:inbook}}{%
         \ifentrytype{incollection}%
           {\usebibmacro{rubcite:incollection}}{%
         \ifentrytype{commentary}%
           {\usebibmacro{rubcite:commentary}}{%
         \ifentrytype{jurisdiction}%
           {\usebibmacro{rubcite:jurisdiction}}%
-          {\usebibmacro{rubcite:misc}}}}}}}}%
+          {\usebibmacro{rubcite:misc}}}}}}}}}%
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citetitle}{%
