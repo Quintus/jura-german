@@ -7,3 +7,5 @@ rub-jura-doc/*.out
 rub-jura-doc/*.pdf
 rub-jura-doc/*.xml
 rub-jura-doc/*.toc
+rub-jura-doc/*.bbl
+rub-jura-doc/*.blg

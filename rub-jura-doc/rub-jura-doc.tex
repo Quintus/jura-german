@@ -3,7 +3,6 @@
 \usepackage{csquotes}
 \usepackage[backend=biber,style=rub-jura]{biblatex}
 \usepackage{fontspec}
-\usepackage{listings}
 \usepackage{xspace}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
@@ -20,8 +19,6 @@
 \renewcommand\thesubsection{\arabic{subsection}}
 
 \addtokomafont{section}{\color{blue}}
-\lstloadlanguages{[latex]tex}
-\lstset{basicstyle=\ttfamily,language=tex}
 
 \newcommand\software[1]{\textsf{#1}}
 \newcommand\rj{\software{rub-jura}\xspace}
@@ -150,9 +147,9 @@ anderen Stilen nicht verstanden werden:
 Es handelt sich um einen \Biblatex-Stil, daher erfolgt die Einbindung
 wie bei jedem anderen \Biblatex-Stil auch.
 
-\begin{lstlisting}
+\begin{verbatim}
 \usepackage[backend=biber,style=rub-jura]{biblatex}
-\end{lstlisting}
+\end{verbatim}
 
 \section{Paketoptionen}
 
@@ -185,17 +182,17 @@ Dieses Paket definiert einige neue Paketoptionen, die beim Latex des
 
 Im Gegensatz zum Paket \verb+biblatex-juradiss+ versucht sich dieser
 Stil möglichst dicht an den Bedeutungen der Eintragstypen wie sie in
-der \Biblatex-Dokumentation beschrieben sind zu halten. Damit sollte
+der \Biblatex-Do\-ku\-men\-ta\-tion beschrieben sind zu halten. Damit sollte
 der höchstmögliche Grad an Kompatibilität zu anderen Stilen (zu den
 Ausnahmen siehe Abschnitt \ref{sec:inkompat}) gewährleistet sein. Für
 die generelle Bedeutung der Typen sei dementsprechend auch auf die
-\Biblatex-Dokumentation verwiesen, hier aufgeführt werden nur die
+\Biblatex-Do\-ku\-men\-ta\-tion verwiesen, hier aufgeführt werden nur die
 besonderen Eigenarten juristischer Literatur.
 
 \subsection{@artice}
 
 Mit \verb+@article+ werden Publikationen in Fachzeitschriften und laut
-\Biblatex-Dokumentation auch Aritkel in Tageszeitungen erfasst (auch
+\Biblatex-Do\-ku\-men\-ta\-tion auch Aritkel in Tageszeitungen erfasst (auch
 wenn ich letzteres für unglücklich halte und einen separaten
 Eintragstyp befürworte). Artikel werden stets nach Seitenzahl und
 niemals nach Randnummer zitiert; Einträge dieses Typs geben in der
@@ -225,6 +222,12 @@ Herangehensweise ausgesprochen\footcite[330]{hoernle-huster}.
 
 Der Eintragstyp \verb+@book+ umfasst Monografien und Lehrbücher.
 
+Es ist in der juristischen Fachliteratur üblich, insbesondere die
+meist nur das Rechtsgebiet benennenden Titel von Lehrbüchern in den
+Fußnoten durch einen Kurztitel zu ersetzen. Dies wird unterstützt, im
+Literaturverzeichnis wird selbstverständlich der vollständige Titel
+aufgeführt.
+
 \begin{rubexample}
 
 \begin{verbatim}
@@ -236,22 +239,6 @@ Der Eintragstyp \verb+@book+ umfasst Monografien und Lehrbücher.
   year = 2013,
   location = "München"
 }
-\end{verbatim}
-
-Der Inhalt des Begriffs „Familie“ ist aus dem Gesetz zu
-beurteilen\footcite[\S\,1 Rnr. 3]{muscheler}.
-
-\printbibliography
-\end{rubexample}
-
-Es ist in der juristischen Fachliteratur üblich, insbesondere die
-meist nur das Rechtsgebiet benennenden Titel von Lehrbüchern in den
-Fußnoten durch einen Kurztitel zu ersetzen. Dies wird unterstützt, im
-Literaturverzeichnis wird selbstverständlich der vollständige Titel
-aufgeführt.
-
-\begin{rubexample}
-\begin{verbatim}
 @book{ipsen,
   title = "Staatsrecht I",
   subtitle = "Staatsorganisationsrecht",
@@ -263,6 +250,9 @@ aufgeführt.
   location = "München"
 }
 \end{verbatim}
+
+Der Inhalt des Begriffs „Familie“ ist aus dem Gesetz zu
+beurteilen\footcite[\S\,1 Rnr. 3]{muscheler}.
 
 Die Vertreter der Länder im Bundesrat können ihre Stimmen nur
 einheitlich abgeben\footcite[\S\,7 Rnr. 343ff]{ipsen}.
@@ -320,6 +310,12 @@ definierte Option \verb+cmtryedit+ angegeben, so wird an den
 \verb+shorthand+ automatisch die Auflage als hochgestellte Zahl
 angehangen.
 
+Ähnlich wie bei \verb+@incollection+ (Abschnitt
+\ref{sec:incollection}) ist die Formatierung eines Kommentars im
+Literaturverzeichnis sehr komplex und nutzt unterschiedliche
+Ausgabeschemata für Namen. Eine Anpassung ohne tiefergehende
+Kenntnisse des Quellcodes dieses Stils scheidet aus.
+
 \begin{rubexample}
 \begin{verbatim}
 @commentary{erman14,
@@ -371,7 +367,7 @@ Tannenspitzen\footcites[][\S\,242 Rnr. 10]{fischer62}[Laufhütte][\S\,242\,Rnr. 
 \printbibliography
 \end{rubexample}
 
-\subsection{@incollection}
+\subsection{@incollection}\label{sec:incollection}
 
 Bei einer \verb+@collection+ handelt es sich um einen Sammelband,
 meist eine Fest- oder Gedächtnisschrift. Eher selten verweist man auf
@@ -457,7 +453,7 @@ Felder lauten:
 \end{description}
 
 Die sonst zulässigen Felder werden von \Biblatex unterstützt, sodass
-ihre Typen der \Biblatex-Dokumentation entnommen werden können, sofern
+ihre Typen der \Biblatex-Do\-ku\-men\-ta\-tion entnommen werden können, sofern
 hier nichts spezielleres angegeben ist. Sie lauten:
 
 \begin{description}
