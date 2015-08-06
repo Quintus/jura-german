@@ -775,8 +775,8 @@
 \DeclareBibliographyDriver{jurisdiction}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \printnames{author}%
-  \newunit\newblock
+  \printnames[last-only-italic]{author}% Im Standardstil wird \labelnamepunct unten missachtet?!
+  \setunit{\labelnamepunct}\newblock
   \printfield{type}
   \printtext{v.\addspace}%
   \printdate{}%
@@ -802,7 +802,7 @@
 \DeclareBibliographyDriver{legislation}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only-italic]{author}% % Im Standardstil wird \labelnamepunct unten missachtet?!
   \setunit{\labelnamepunct}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
