@@ -92,7 +92,16 @@
   \printnames[last-only-italic]{author}%
   \setunit{\nametitledelim}%
   \usebibmacro{in:}%
-  \usebibmacro{cite:title}%
+  \usebibmacro{cite:title}% Gibt es kein shortbooktitle? Das wäre vorzugswürdig...
+  \newunit%
+  \printfield[onlyfirstpage]{pages}%
+}
+
+\newbibmacro{rubcite:inproceedings}{%
+  \printnames[last-only-italic]{author}%
+  \setunit{\nametitledelim}%
+  \usebibmacro{in:}%
+  \printfield{booktitle}%
   \newunit%
   \printfield[onlyfirstpage]{pages}%
 }
@@ -159,11 +168,13 @@
           {\usebibmacro{rubcite:inbook}}{%
         \ifentrytype{incollection}%
           {\usebibmacro{rubcite:incollection}}{%
+        \ifentrytype{inproceedings}%
+          {\usebibmacro{rubcite:inproceedings}}{%
         \ifentrytype{commentary}%
           {\usebibmacro{rubcite:commentary}}{%
         \ifentrytype{jurisdiction}%
           {\usebibmacro{rubcite:jurisdiction}}%
-          {\usebibmacro{rubcite:misc}}}}}}}}}%
+          {\usebibmacro{rubcite:misc}}}}}}}}}}%
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citetitle}{%
