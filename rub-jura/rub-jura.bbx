@@ -58,12 +58,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatierung für Namenslisten
 
-% FIXME: \usebibmacro{name:andothers} darf nur ausgeführt
-% werden, wenn \ifmorenames true ist. Das macht aber zZt.
-% die Formatierung von Eigennamenskommentaren kaputt.
 \DeclareNameFormat{last-first-italic}{%
   \usebibmacro{name:last-first}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}%
-  \textit{\usebibmacro{name:andothers}}}
+  \ifmorenames{%
+    \textit{\usebibmacro{name:andothers}}}%
+    {}}
 
 \DeclareNameAlias{author}{last-first-italic}
 \DeclareNameAlias{editor}{last-first-italic}
