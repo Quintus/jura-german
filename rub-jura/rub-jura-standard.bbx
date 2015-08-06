@@ -3,11 +3,15 @@
 
 % Basiert auf standard.bbx aus TeXLive 2015.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Feldanpassungen
+
 \newtoggle{bbx:isbn}
 \newtoggle{bbx:url}
 \newtoggle{bbx:doi}
 \newtoggle{bbx:eprint}
 \newtoggle{bbx:related}
+\newtoggle{bbx:citebytitle}
 
 \DeclareBibliographyOption{isbn}[true]{%
   \settoggle{bbx:isbn}{#1}}
@@ -20,7 +24,15 @@
 \DeclareBibliographyOption{related}[true]{%
   \settoggle{bbx:related}{#1}}
 
+% Neue Eintragsoption citebytitle: Wenn gesetzt, wird ein @commentary
+% unter seinem title geführt und nicht nach den Namen seiner
+% Herausgeber.
+\DeclareEntryOption{citebytitle}[true]{\settoggle{bbx:citebytitle}{#1}}
+
 \ExecuteBibliographyOptions{isbn,url,doi,eprint,related}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Drivers
 
 \newbibmacro*{begentry}{}
 \newbibmacro*{finentry}{\finentry}
@@ -702,19 +714,18 @@
 
 % Dieser ist neu im Vergleich zum Original-authortitle-ibd.bbx.
 % Juristische Kommentare.
-% Das Feld "maintitle" macht den Unterschied: Soll der Kommentar
-% nach Autor/Herausgeber, oder nach Titel (maintitle) in der
-% Bibliografie aufgeführt werden?
+% Die Darstellung in der Bibliographie ist maßgeblich abhängig
+% von der Option „citebytitle“.
 \DeclareBibliographyDriver{commentary}{%
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
-  \iffieldundef{maintitle}
+  \iftoggle{bbx:citebytitle}
+    {\printfield{title}%
+     \newunit\newblock
+     \usebibmacro{author/translator+others}} % *Ohne* Editor, der wird dann von byeditor+others nachgesetzt wie bei einem @incollection.
     {\usebibmacro{author/editor+others/translator+others}% Komplett *mit* Editor
      \setunit{\labelnamepunct}
      \printfield{title}}%
-    {\printfield{maintitle}%
-     \newunit\newblock
-     \usebibmacro{author/translator+others}} % *Ohne* Editor, der wird dann von byeditor+others nachgesetzt wie bei einem @incollection.
   \newblock\newunit
   \printlist{language}%
   \newunit\newblock
@@ -799,6 +810,9 @@
 \DeclareBibliographyAlias{suppperiodical}{article}
 \DeclareBibliographyAlias{review}{article}
 \DeclareBibliographyAlias{*}{misc}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hilfsmakros
 
 \newbibmacro*{maintitle+title}{%
   \iffieldsequal{maintitle}{title}
