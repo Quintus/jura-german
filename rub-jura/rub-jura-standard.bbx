@@ -926,10 +926,14 @@
   \newunit}
 
 \newbibmacro*{chapter+pages}{%
-  \printfield{chapter}%
   \setunit{\bibpagespunct}%
-  \printfield{pages}%
-  \newunit}
+  \iffieldundef{chapter}%
+    {\printfield{pages}%
+     \newunit}%
+    {\printfield{chapter}%
+     \setunit{\addspace}%
+     \printfield[chapterpages]{pages}%
+     \setunit{\addspace}}}
 
 \newbibmacro*{note+pages}{%
   \printfield{note}%

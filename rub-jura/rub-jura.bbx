@@ -38,6 +38,13 @@
 \DeclareFieldFormat{booktitle}{#1}
 % Zeitschriftentitel sind auch nicht kursiv.
 \DeclareFieldFormat{journaltitle}{#1}
+% Formatierung der Seitenangabe in der Bibliografie, wenn das
+% +chapter+-Feld angegeben wird (Der Wert von +chapter+ wird
+% in diesem Falle vor der Seitenangabe ausgegeben).
+% Das Kapitel selbst wird ohne „Kap.“ (wie in biblatex.def)
+% ausgegeben.
+\DeclareFieldFormat{chapterpages}{(\mkpageprefix[bookpagination]{#1})}
+\DeclareFieldFormat{chapter}{#1}
 
 \DeclareFieldFormat{supedition}{\textsuperscript{#1}}
 \DeclareFieldFormat[commentary]{shorthand}{%
