@@ -32,7 +32,7 @@
 \KOMAoptions{DIV=last}
 
 \begin{document}
-\title{ruby-jura}
+\title{rub-jura}
 \subtitle{Juristischer Bibliografierstil}
 \author{Marvin Gülker}
 \date{\today}
@@ -107,12 +107,13 @@ Anpassung der Fußnoten auf die jeweiligen Eintragstypen nicht
 vollständig ist, was ich aber gern noch nacharbeiten will. Schließlich
 ist die große Menge von \Biblatex unterstützter Eintragstypen einer
 seiner besonderen Vorteile. Unterstützt werden zurzeit die in Tabelle
-\ref{tab:unterstuetzte-typen} aufgeführten Eintragstypen.
+\ref{tab:unterstuetzte-typen} aufgeführten Eintragstypen; andere Typen
+können funktionieren, müssen aber nicht.
 
 \begin{table}
   \centering\ttfamily
 
-  @article @book @commentary @incollection @jurisdiction @misc
+  @article @book @commentary @incollection @jurisdiction @manual @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -562,6 +563,34 @@ getrost aktivieren und erhält so erheblich elegantere Fußnoten.
 
 Das haben auch schon diverse\footcite[2129]{lg-koeln-njw-2012-2128}
 Gerichte erkannt\footcite{bverfge-24-236}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@manual}
+
+Als \verb+@manual+ sind technische Dokumentationen,
+Bedienungs- und Gebrauchsanleitungen und ähnliche Dokumente zu
+qualifizieren. Auch die Dokumentationen von \LaTeX{}-Pa\-ke\-ten
+fallen hierunter.
+
+\begin{rubexample}
+\begin{verbatim}
+@manual{biblatex,
+  author = "Philipp Lehman and Philip Kime and Audrey Boruvka
+    and Joseph Wright",
+  title = "The Biblatex package",
+  subtitle = "Programmable Bibliographies and Citations",
+  gender = "pm",
+  date = "2015-04-20",
+  version = "3.0.0",
+  langid = "english",
+  pagination = "section"
+}
+\end{verbatim}
+
+\Biblatex unterstützt eine Menge verschiedener Felder für die
+jeweiligen Eintragstypen\footcite[2.2.2]{biblatex}.
 
 \printbibliography
 \end{rubexample}
