@@ -25,6 +25,7 @@
 \newcommand\Biblatex{\software{Bib\LaTeX{}}\xspace}
 \newcommand\name[1]{\textit{#1}}
 \newcommand\zB{z.\,B.\xspace}
+\AtBeginDocument{\renewcommand\dh{d.\,h.\xspace}}
 
 \newenvironment{rubexample}{\par\vspace{\baselineskip}\hrule\par\begin{refsection}}{\end{refsection}\par\hrule\par\vspace{\baselineskip}}
 
@@ -272,24 +273,67 @@ beachten gibt.
 Zunächst einmal werden manche Kommentare nach ihrem Begründer, andere
 nach ihren Herausgebern, und wieder andere nach Eigennamen zitiert
 („Palandt“, „Jarass/Pieroth“, „Leipziger Kommentar zum
-Strafgesetzbuch“). Kommentare mit Eigennamen müssen im
-Literaturverzeichnis unter diesem Eigennamen einsortiert werden, was
-den Autor dieses Stils vor eine gewisse Herausforderung gestellt
-hat. Die Lösung ist vielleicht nicht ganz sauber, aber durch die Wahl
-der Felder eines \verb+@commentary+ kann der Nutzer dies nun selbst
-beeinflussen: Entweder kann man den Titel über das Feld \verb+title+
-angeben — dann wird der Kommentar nach den Herausgebern einsortiert —,
-oder man kann den Titel über das Feld \verb+maintitle+ angeben. Dann
-wird der Titel als Eigenname behandelt und der Kommentar entsprechend
-einsortiert. Kommentare mit Eigennamen zitiert man zudem nicht mit dem
-vollen Titel, sondern ersetzt die gesamte Kurzzitation durch einen
-einzigen bekannten Begriff, den \verb+shorthand+, den man in solchen
-Fällen zwingend angeben muss (etwa „MüKo“ für den Münchener
-Kommentar). Der Eintrag eines Kommentars im Literaturverzeichnis wird
-bei Vorhandensein des Feldes \verb+shorthand+ ergänzt um eine Angabe
-„zitiert als: \textit{Bearbeiter}, in: Shorthand“.
+Strafgesetzbuch“). Es scheint nach den Beobachtungen des Autors im
+wesentlichen drei Kategorien von Kommentaren zu geben:
 
-Zum anderen erhält das Feld \verb+prenote+ bei der Zitation von
+\begin{enumerate}
+\item Solche, die eher unbekannt sind. Sie werden in der Fußnote stets
+  mit Autor bzw. Herausgeber und Titel bzw. Kurztitel zitiert.
+\item Solche, die aufgrund ihrer Bekanntheit (und ihres Umfangs mit
+  entsprechender Zahl der Bearbeiter) mit einem Eigennamen zitiert
+  werden, der vollständig an die Stelle der Herausgeber tritt.
+\item Solche, die nach ihrem Begründer zitiert werden, aber schon so
+  bekannt sind, dass man den Titel bzw. Kurztitel nicht mehr angibt.
+\end{enumerate}
+
+Kommentare der dritten Kategorie sind es, die den Quellcode für
+\verb+@commentary+ recht komplex werden lassen. Leider fällt mit
+dem \name{Palandt} ein recht wichtiger Kommentar in diese Kategorie,
+sie kann deshalb nicht einfach als Sonderfall abgeschrieben werden,
+den man eben einfach gleich wie solche der ersten Kategorie behandeln
+kann. Während allgemein erwartet wird dass man den \name{Fischer} als
+„\name{Fischer}, StGB, §…“ zitiert (weil er in die erste Kategorie
+fällt), stieße es doch auf Widerstand, den \name{Palandt} als
+„\name{Palandt}, BGB, §…“ zu zitieren. Letzterer muss vielmehr wie ein
+Eigennamenskommentar gleich dem \name{Münchener Kommentar} in der
+Fußnote erscheinen: „\name{Palandt}, §…“, „\name{MüKo}, §…“ (natürlich
+jeweils mit Bearbeiter vorweg). Im Literaturverzeichnis aber müssen
+die Kommentare der zweiten Kategorie unter ihrem Eigennamen als
+Langtitel („Münchener Kommentar zum Bürgerlichen Gesetzbuch“)
+aufgeführt und einsortiert werden, Kommentare der dritten Kategorie,
+obwohl doch zitiert als hätten sie Eigennamen, werden jedoch
+einsortiert wie Kommentare der ersten Kategorie, \dh unter dem Namen
+des Begründers einschließlich Vorname. Um dieser Komplexität Rechnung
+zu tragen, führt dieser Stil eine eigene Eintragsoption für Einträge
+des Typs \verb+@commentary+ ein:
+
+\begin{description}
+\item[citebytitle] Wird diese Option angegeben, wird der Titel des
+  Kommentars als Eigenname angesehen und er wird unter diesem Titel in
+  das Literaturverzeichnis eingepflegt. Fehlt sie, wird der Kommentar
+  stattdessen unter dem Namen des Herausgebers eingepflegt.
+
+  Diese Option sollte nur zusammen mit den Optionen
+  \verb+useauthor=false+ und \verb+useeditor=false+ angegeben
+  werden. Dies stellt sicher, dass \Biblatex den Eintrag nicht nur mit
+  dem Titel voran formatiert, sondern ihn auch nach dem Titel
+  einsortiert (und nicht etwa der \name{Erman} bei „W“ wie
+  \name{Westermann} einsortiert wird).
+\end{description}
+
+Weiterhin zitiert man Eigennamenskommentare auch in den Fußnoten nicht
+mit ihren Herausgebern, sondern mit dem Eigennamen in gekürzter
+Form. Aus Sicht von \Biblatex handelt es sich dabei um eine vollstände
+Ersetzung aller bibliografischen Angaben durch einen einzigen,
+bekannten und kurzen Terminus. Für solche sieht \Biblatex das Feld
+\verb+shorthand+ vor, von welchem man auch tunlichst Gebrauch machen
+sollte, wenn man einen Kommentar der zweiten oder dritten Kategorie
+bemüht. Die Verwendung des Felds \verb+shorthand+ ergänzt in der
+Literaturliste den Eintrag um ein „zitiert als: \name{Bearbeiter}, in:
+shorthand“ und ersetzt in der Fußnote die Herausgeberliste und den
+Titel durch den \verb+shorthand+. Beispiele finden sich unten.
+
+Schließlich erhält das Feld \verb+prenote+ bei der Zitation von
 Kommentaren eine besondere Bedeutung, die auch nicht übergangen werden
 kann. Dieses Feld gibt \emph{immer} den Bearbeiter an, und wird in der
 Fußnote automatisch um ein „in:“ ergänzt. Für Kommentare, die nur
@@ -319,20 +363,21 @@ Kenntnisse des Quellcodes dieses Stils scheidet aus.
 \begin{rubexample}
 \begin{verbatim}
 @commentary{erman14,
-  title = "Bürgerliches Gesetzbuch, Handkommentar",
+  title = "Erman Bürgerliches Gesetzbuch, Handkommentar",
   shorthand = "Erman",
-  editor = {Harm Peter Westermann and Barbara Grunewald
-    and Georg Maier-Reimer},
+  editor = {Harm Peter Westermann and Barbara Grunewald and
+    Georg Maier-Reimer},
   gender = "pm",
   edition = 14,
   location = "Köln",
   year = 2014,
+  options = {citebytitle,useauthor=false,useeditor=false}
 }
 @commentary{palandt15,
   title = "Bürgerliches Gesetzbuch mit Nebengesetzen",
-  shorthand = "Palandt",
   editor = "Otto Palandt",
   editortype = "founder",
+  shorthand = "Palandt",
   gender = "sm",
   edition = 74,
   year = 2015,
@@ -349,13 +394,14 @@ Kenntnisse des Quellcodes dieses Stils scheidet aus.
   publisher = "C.\,H. Beck"
 }
 @commentary{leipzig06,
-  maintitle = "Leipziger Kommentar zum Strafgesetzbuch",
+  title = "Leipziger Kommentar zum Strafgesetzbuch",
   shorthand = "LK-StGB",
   editor = "Heinrich Wilhelm Laufhütte and
     Ruth Rissing-van Saan and Klaus Tiedemann",
   edition = 12,
   location = "Berlin",
   year = 2006,
+  options = {citebytitle,useauthor=false,useeditor=false}
 }
 \end{verbatim}
 
