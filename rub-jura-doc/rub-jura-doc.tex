@@ -118,7 +118,8 @@ weitere Informationen diesbezüglich sei auf die
 \begin{table}
   \centering
 
-  @article @book @commentary @inbook @incollection @inproceedings @jurisdiction @manual @misc
+  @article @book @commentary @inbook @incollection @inproceedings
+  @jurisdiction @legislation @manual @misc
 
   \caption{Unterstützte Eintragstypen}
   \label{tab:unterstuetzte-typen}
@@ -669,6 +670,78 @@ getrost aktivieren und erhält so erheblich elegantere Fußnoten.
 
 Das haben auch schon diverse\footcite[2129]{lg-koeln-njw-2012-2128}
 Gerichte erkannt\footcite{bverfge-24-236}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@legislation}
+
+\verb+@legislation+ dient der Erfassung amtlicher Dokumente der
+Gesetzgebungsorgane, insbesondere von Gesetzesentwürfen und
+Stellungnahmen. Gerichtsentscheidungen werden mit \verb+@jurisdiction+
+erfasst.
+
+Solche Dokumente liegen stets als sog. „Drucksache“ vor, die man
+gemeinhin nicht nach Autor zitiert, sondern mit einem besonderen
+Kürzel, welches das Organ und die Nummer der Drucksache angibt
+(„BT-Drs. 12/3456“). Sie werden üblicherweise auch nicht in das
+Literaturverzeichnis aufgenommen, sodass sich bei Verwendung der
+Ausschluss dieses Typs aus dem Literaturverzeichnis empfiehlt:
+
+\begin{verbatim}
+\printbibliography[nottype=legislation]
+\end{verbatim}
+
+Dieser Stil unterstützt eine solche Aufnahme aber dennoch.
+
+Der Typ \verb+@legislation+ wird von \Biblatex normalerweise nicht
+unterstützt und ist dementsprechend nur sehr begrenzt auf andere Stile
+portabel. Im Gegensatz zu \verb+@jurisdiction+ waren hier aber
+immerhin keine gänzlich neuen Felder erforderlich, vielmehr können die
+bestehenden Felder sinnvoll verwendet werden. Die zulässigen Felder
+lauten:
+
+\begin{description}
+\item[author] \emph{(erforderlich)} Name des Organs („Deutscher
+  Bundesrat“, „Landtag des Landes Nordrhein-Westfalen“).
+\item[date] \emph{(erforderlich)} Veröffentlichungsdatum als
+  vollständige Angabe im Format Jahr-Monat-Tag.
+\item[number] \emph{(erforderlich)} Nummer des Dokuments, ohne Kürzel
+  des Organs („12/3456“).
+\item[title] \emph{(erforderlich)} Titel des Dokuments.
+\item[type] \emph{(erforderlich)} Dokumenttyp. Das ist eigentlich
+  immer „Drucksache“.
+\item[shorthand] \emph{(erforderlich)} Zitierformat für die Fußnoten,
+  bestehend aus Kürzel des Organs, des Typs und der Dokumentnummer
+  („BT-Drs. 12/3456“).
+\end{description}
+
+\begin{rubexample}
+\begin{verbatim}
+@legislation{bt-drs18-5453,
+  author = {{Deutscher Bundestag}},
+  title = "Entwurf eines Gesetzes zur Aufhebung des
+    Artikel-10-Gesetzes und weiterer Gesetze mit Befugnis
+    für die Nachrichtendienste des Bundes zu
+    Beschränkungen von Artikel 10 des Grundgesetzes",
+  type = "Drucksache",
+  number = "18/5453",
+  shorthand = "BT-Drs. 18/5453",
+  date = "2015-07-02"
+}
+@legislation{lt-drs16-9078,
+  author = {{Landtag des Landes Nordrhein-Westfalen}},
+  title = "Gesetz zur Änderung gesetzlicher Befristungen im
+    Zusammenhang mit der ländlichen Bodenordnung, Entwurf",
+  type = "Drucksache",
+  number = "16/9078",
+  shorthand = "LTNW-Drs. 16/9078",
+  date = "2015-06-25"
+}
+\end{verbatim}
+
+Ein Bundes-\footcite{bt-drs18-5453} und ein
+Landesgesetzesentwurf\footcite[9]{lt-drs16-9078}.
 
 \printbibliography
 \end{rubexample}
