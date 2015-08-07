@@ -9,3 +9,4 @@ rub-jura-doc/*.xml
 rub-jura-doc/*.toc
 rub-jura-doc/*.bbl
 rub-jura-doc/*.blg
+rub-jura-doc/*.lot
