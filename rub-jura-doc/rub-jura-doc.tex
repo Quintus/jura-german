@@ -24,6 +24,7 @@
 \newcommand\rj{\software{rub-jura}\xspace}
 \newcommand\Biblatex{\software{Bib\LaTeX{}}\xspace}
 \newcommand\name[1]{\textit{#1}}
+\newcommand\abbrev[1]{\textsc{#1}}
 \newcommand\zB{z.\,B.\xspace}
 \AtBeginDocument{\renewcommand\dh{d.\,h.\xspace}}
 
@@ -770,6 +771,45 @@ fallen hierunter.
 
 \Biblatex unterstützt eine Menge verschiedener Felder für die
 jeweiligen Eintragstypen\footcite[2.2.2]{biblatex}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@online}
+
+Blogposts, Foren- und archivierte Mailinglistenbeiträge, reine
+On\-line-Res\-sour\-cen und ähnliches fallen in den
+Zuständigkeitsbereich des Typs \verb+@online+. Artikel in
+Fachzeitschriften, die auch online abrufbar sind, gehören dagegen nach
+\verb+@article+. Juristen sind die Zitation reiner
+On\-line-Pu\-bli\-ka\-tio\-nen nicht gewöhnt, daher sollte man mit
+diesem Typ sparsam umgehen.
+
+Obwohl \Biblatex das Feld \verb+urldate+ als „optional“ führt, sollte
+es unbedingt angegeben werden, da Veröffentlichungen im Internet sich
+jederzeit ändern können und nur so ersichtlich ist, welche Fassung den
+gegebenen Ausführungen zugrunde lag. Zudem ändert sich gelegentlich
+auch die \abbrev{url} einer Publikation, daher ist, wenn möglich, ein
+sog. „Permalink“ zu benutzen, für den der Betreiber einer Plattform
+eine gewisse Garantie hinsichtlich seiner Beständigkeit ausspricht
+(außerdem ist der Permalink meist kürzer, was ihn für den Leser
+leichter abtippbar macht).
+
+\begin{rubexample}
+\begin{verbatim}
+@online{blogpost,
+  author = "Oliver García",
+  title = "Das Strafbefehlsverfahren — Gerichte auf
+    Autopilot?",
+  date = "2015-03-23",
+  url =  "http://blog.delegibus.com/4110",
+  urldate = "2015-08-07"
+}
+\end{verbatim}
+
+Die Behandlung von Strafbefehlen und anderen dem Richtervorbehalt
+unterliegenden Maßnahmen durch manche Gerichte lässt Besorgnis
+aufkommen\footcite{blogpost}.
 
 \printbibliography
 \end{rubexample}
