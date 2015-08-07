@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,DIV=calc,draft]{scrartcl}
+\documentclass[11pt,a4paper,DIV=calc]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=rub-jura]{biblatex}
@@ -7,18 +7,18 @@
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
 
-%\addbibresource{realrefs.bib}
 \addbibresource[label=example]{examples.bib}
 
 \setmainfont{Linux Libertine O}
 \setsansfont{Linux Biolinum O}
 
-%\definecolor{darkblue}{rgb}{03039d}
-
 \renewcommand\thesection{\Roman{section}}
 \renewcommand\thesubsection{\arabic{subsection}}
 
-\addtokomafont{section}{\color{blue}}
+\definecolor{darkred}{rgb}{0.7,0,0.1}
+\addtokomafont{disposition}{\color{darkred}}
+\addtokomafont{descriptionlabel}{\color{darkred}}
+\addtokomafont{title}{\color{black}}
 
 \newcommand\software[1]{\textsf{#1}}
 \newcommand\rj{\software{rub-jura}\xspace}
@@ -37,8 +37,10 @@
 \begin{document}
 \title{rub-jura}
 \subtitle{Juristischer Bibliografierstil}
-\author{Marvin Gülker}
-\date{\today}
+\author{Marvin Gülker\footnote{Kontaktinformationen finden sich im
+    Impressum auf Seite \pageref{sec:impressum}.}}
+\date{\today\footnote{Die jeweils aktuelle Version kann unter
+    \url{https://github.com/Quintus/jura-german} gefunden werden.}}
 \maketitle{}
 
 \tableofcontents{}
@@ -238,7 +240,7 @@ Absatz zu verändern, ist faktisch
 unmöglich\footnote{\url{https://tex.stackexchange.com/questions/87073}}. Es
 ist allein möglich, durch vorsichtiges Taktieren mit
 \verb+\addfontfeatures+ aus dem Paket \software{fontspec} den
-Wordabstand global für das gesamte Dokument zu ändern:
+Wortabstand global für das gesamte Dokument zu ändern:
 
 \begin{verbatim}
 \addfontfeatures{WordSpace = 2}
@@ -561,12 +563,12 @@ Tannenspitzen\footcites[][\S\,242 Rnr. 10]{fischer62}[Laufhütte][\S\,242\,Rnr. 
 Gelegentlich kommt es vor, dass innerhalb eines Buches klar nach Autor
 und Titel abgrenzbare Abschnitte vorliegen, ohne dass das Buch ein
 Sammelband (etwa eine Festschrift) im Sinne einer \verb+@incollection+
-wäre. Das ist typischerweise bei Anwaltshandbüchern der Fall. Für diese
-Art von Literatur empfiehlt sich \verb+@inbook+, welches im Gegensatz
-zu \verb+@incollection+ auch nicht zwangsweise mit einer Seitenangabe
-zitiert werden muss (da \verb+@incollection+ stets die Startseite des
-Beitrags in der Fußnote mit ausgibt, dieser Typ dies jedoch nicht
-tut).
+wäre. Das ist typischerweise bei Anwaltshandbüchern der Fall. Für
+diese spezielle Art von Literatur empfiehlt sich \verb+@inbook+,
+welches im Gegensatz zu \verb+@incollection+ auch nicht zwangsweise
+mit einer numerischen Seitenangabe zitiert werden muss (da
+\verb+@incollection+ stets die Startseite des Beitrags in der Fußnote
+mit ausgibt, dieser Typ dies jedoch nicht tut).
 
 
 Für diesen Typ empfiehlt sich die Angabe des Feldes
@@ -696,9 +698,9 @@ Sprache\footcite[25]{konferenzband}.
 
 \subsection{@jurisdiction}
 
-Ähnlich schwierig wie \verb+@commentary+ war die Implementierung von
-\verb+@jurisdiction+. Das Besondere an Rechtsprechung ist, dass sie
-üblicherweise nicht in das Literaturverzeichnis aufgenommen wird;
+Ähnlich schwierig wie \verb+@commentary+ war auch die Implementierung
+des Typs \verb+@jurisdiction+. Das Besondere an Rechtsprechung ist, dass
+sie üblicherweise nicht in das Literaturverzeichnis aufgenommen wird;
 dieser Stil unterstützt das aber nichtsdestotrotz. Es ist bei der
 Verwendung dieses Typs daher darauf zu achten, den Aufruf von
 \verb+\printbibliography+ so zu gestalten, dass er Einträge des Typs
@@ -708,11 +710,11 @@ Verwendung dieses Typs daher darauf zu achten, den Aufruf von
 \printbibliography[nottype=jurisdiction]
 \end{verbatim}
 
-Dieser Typ benötigt weitaus mehr Informationen, als sich mit den von
-\Biblatex unterstützten Standardfeldern erfassen lässt. Daher hat der
-Autor für diesen Typ \emph{zusätzliche} Felder definiert, die von
-\Biblatex \emph{sonst nicht unterstützt} werden. Diese zusätzlichen
-Felder lauten:
+Dieser Typ benötigt weitaus mehr Informationen, als sich mit den
+bereits von \Biblatex unterstützten Standardfeldern erfassen
+lässt. Daher hat der Autor für diesen Typ \emph{zusätzliche} Felder
+definiert, die von \Biblatex \emph{sonst nicht unterstützt}
+werden. Diese zusätzlichen Felder lauten:
 
 \begin{description}
 \item[az] \emph{(literal)} Das Aktenzeichen des Urteils.
@@ -720,9 +722,9 @@ Felder lauten:
   Fundstelle. Hierbei kann es sich entweder um eine Fundestelle in der
   amtlichen Sammlung des erkennenden Gerichtes („BGHZ 123, 45“) oder
   um eine Fundstelle in einer der größeren juristischen
-  Fachzeitschriften handeln („NJW 1999, 1111“). Gibt es eine
-  Fundstelle in der amtlichen Sammlung, ist diese \emph{immer} die
-  primäre Fundstelle.
+  Fachzeitschriften handeln („NJW 1999, 1111“). Eine Fundstelle in der
+  amtlichen Sammlung ist, sofern vorhanden, \emph{immer} die primäre
+  Fundstelle.
 \item[secondary] \emph{(literal)} Sekundäre Fundstelle. Zusätzlich zur
   primären Fundstelle kann das Urteil außerdem in der hier angegebenen
   Zeitschrift gefunden werden (\zB „FamRZ 2000, 2222“). Die sekundäre
@@ -800,11 +802,12 @@ Gerichte erkannt\footcite{bverfge-24-236}.
 
 \subsection{@legal}
 
-Diesen Typ wird man in rechtswissenschaftlichen Aufsätzen aller
-Wahrscheinlichkeit nicht benötigen. Da er dem Namen nach aber mit der
-Rechtswissenschaft zusammenhängt, sah der Autor es als opportun an,
-Unterstützung für ihn in diesen Stil aufzunehmen. Die Standardstile
-von \Biblatex unterstützen diesen Typen nur als Alias für \verb+@misc+.
+Diesen Typ wird man in den üblichen rechtswissenschaftlichen Aufsätzen
+aller Wahrscheinlichkeit nicht benötigen. Da er dem Namen nach aber
+mit der Rechtswissenschaft zusammenhängt, sah der Autor es als
+opportun an, Unterstützung für ihn in diesen Stil aufzunehmen. Die
+Standardstile von \Biblatex unterstützen diesen Typen nur als Alias
+für \verb+@misc+.
 
 Mit \verb+@legal+ erfasst man Gesetze und Verträge, nicht dagegen die
 Unterlagen im Gesetzgebungsverfahren, für welche \verb+@legislation+
@@ -814,12 +817,14 @@ gedacht ist. Die zulässigen Felder lauten:
 \item[title] \emph{(erforderlich)} Titel des Gestzes bzw. des
   Vertrages.
 \item[shorttitle] Kurztitel, falls verfügbar (etwa „BGB“).
-\item[origdate] Datum der Bekanntmachung des Gesetzes bzw. der
-  ursprünglichen, ungeänderten Fassung eines Vertrages.
-\item[date] Datum der letzten Änderung am Gesetz bzw. am Vertrag.
+\item[origdate] Datum der Bekanntmachung des Gesetzes bzw. bei
+  Verträgen der ursprünglichen, ungeänderten Fassung eines Vertrages.
+\item[date] Datum der letzten Änderung am Gesetz bzw. am Vertrag. Wenn
+  dieses Feld angegeben wird, muss auch \verb+origdate+ angegeben
+  werden.
 \item[note] Ein hinter dem Änderungsdatum in Klammern anzuführender
-  Hinweis. Für Gesetze ist dies typischerweise die Seite im
-  Bundesgesetzblatt („BGBl. I S. 2749“).
+  Hinweis. Für Gesetze ist dies typischerweise der Teil und die Seite
+  im Bundesgesetzblatt („BGBl. I S. 2749“).
 \end{description}
 
 \begin{rubexample}
@@ -848,9 +853,9 @@ wiedergegeben\footcite[11]{vertrag}.
 \subsection{@legislation}
 
 \verb+@legislation+ dient der Erfassung amtlicher Dokumente der
-Gesetzgebungsorgane, insbesondere von Gesetzesentwürfen und
-Stellungnahmen. Gerichtsentscheidungen werden mit \verb+@jurisdiction+
-erfasst.
+parlamentarischen Gesetzgebungsorgane, insbesondere von
+Gesetzesentwürfen und Stellungnahmen. Gerichtsentscheidungen werden
+mit \verb+@jurisdiction+ erfasst.
 
 Solche Dokumente liegen stets als sog. „Drucksache“ vor, die man
 gemeinhin nicht nach Autor zitiert, sondern mit einem besonderen
@@ -866,11 +871,11 @@ Ausschluss dieses Typs aus dem Literaturverzeichnis empfiehlt:
 Dieser Stil unterstützt eine solche Aufnahme aber dennoch.
 
 Der Typ \verb+@legislation+ wird von \Biblatex normalerweise nicht
-unterstützt und ist dementsprechend nur sehr begrenzt auf andere Stile
-portabel. Im Gegensatz zu \verb+@jurisdiction+ waren hier aber
-immerhin keine gänzlich neuen Felder erforderlich, vielmehr können die
-bestehenden Felder sinnvoll verwendet werden. Die zulässigen Felder
-lauten:
+bzw. nur als Alias für \verb+@misc+ unterstützt und ist
+dementsprechend nur sehr begrenzt auf andere Stile portabel. Im
+Gegensatz zu \verb+@jurisdiction+ waren hier aber immerhin keine
+gänzlich neuen Felder erforderlich, vielmehr können die bestehenden
+Felder sinnvoll verwendet werden. Die zulässigen Felder lauten:
 
 Dieser Typ ist entgegen der Dokumentation von \Biblatex nicht für
 fertige Gesetze vorgesehen. Der Autor hält diese Einordnung für einen
@@ -881,13 +886,13 @@ logischen Fehler und empfiehlt dafür stattdessen \verb+@legal+.
   Bundesrat“, „Landtag des Landes Nordrhein-Westfalen“).
 \item[date] \emph{(erforderlich)} Veröffentlichungsdatum als
   vollständige Angabe im Format Jahr-Monat-Tag.
-\item[number] \emph{(erforderlich)} Nummer des Dokuments, ohne Kürzel
-  des Organs („12/3456“).
+\item[number] \emph{(erforderlich)} Bloße Nummer des Dokuments, ohne
+  Kürzel des Organs („12/3456“).
 \item[title] \emph{(erforderlich)} Titel des Dokuments.
 \item[type] \emph{(erforderlich)} Dokumenttyp. Das ist eigentlich
   immer „Drucksache“.
-\item[shorthand] \emph{(erforderlich)} Zitierformat für die Fußnoten,
-  bestehend aus Kürzel des Organs, des Typs und der Dokumentnummer
+\item[shorthand] \emph{(erforderlich)} Das Zitierformat für die Fußnoten,
+  bestehend aus dem Kürzel des Organs, des Typs und der Dokumentnummer
   („BT-Drs. 12/3456“).
 \end{description}
 
@@ -924,15 +929,14 @@ Landesgesetzesentwurf\footcite[9]{lt-drs16-9078}.
 \subsection{@manual}
 
 Als \verb+@manual+ sind technische Dokumentationen,
-Bedienungs- und Gebrauchsanleitungen und ähnliche Dokumente zu
-qualifizieren. Auch die Dokumentationen von \LaTeX{}-Pa\-ke\-ten
-fallen hierunter.
+Bedienungsanleitungen und ähnliche Dokumente zu qualifizieren. Auch
+die Dokumentationen von \LaTeX{}-\\Pa\-ke\-ten fallen hierunter.
 
 \begin{rubexample}
 \begin{verbatim}
 @manual{biblatex,
-  author = "Philipp Lehman and Philip Kime and Audrey Boruvka
-    and Joseph Wright",
+  author = "Philipp Lehman and Philip Kime and Audrey
+    Boruvka and Joseph Wright",
   title = "The Biblatex package",
   subtitle = "Programmable Bibliographies and Citations",
   gender = "pm",
@@ -951,9 +955,9 @@ jeweiligen Eintragstypen\footcite[2.2.2]{biblatex}.
 
 \subsection{@online}
 
-Blogposts, Foren- und archivierte Mailinglistenbeiträge, reine
-On\-line-Res\-sour\-cen und ähnliches fallen in den
-Zuständigkeitsbereich des Typs \verb+@online+. Artikel in
+Blogposts, Foren- und archivierte Mailinglistenbeiträge,
+Webenzyklopädien, reine On\-line-Res\-sour\-cen und ähnliches fallen
+in den Zuständigkeitsbereich des Typs \verb+@online+. Artikel in
 Fachzeitschriften, die auch online abrufbar sind, gehören dagegen nach
 \verb+@article+. Juristen sind die Zitation reiner
 On\-line-Pu\-bli\-ka\-tio\-nen nicht gewöhnt, daher sollte man mit
@@ -1050,16 +1054,16 @@ auf\footcite[123]{dissertation}.
 \printbibliography
 \end{rubexample}
 
-\section{Impressum}
+\section{Impressum}\label{sec:impressum}
 
 Marvin Gülker\\
 Vaersthausener Str. 73a\\
 59425 Unna
 
 \begin{tabbing}
-  Tel. \= 02303 \= / \= 884365\\
-  Fax  \> 02303 \> / \> 671108\\
-  E-Mail \>     \> m-guelker@quintilianus.eu
+  Tel.: \= 02303 \= / \= 884365\\
+  Fax:  \> 02303 \> / \> 671108\\
+  E-Mail: m-guelker@quintilianus.eu
 \end{tabbing}
 
 \end{document}
