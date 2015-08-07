@@ -107,8 +107,8 @@ noch aufgehoben werden. Auch weise ich darauf hin, dass die minutiöse
 Anpassung der Fußnoten auf die jeweiligen Eintragstypen nicht
 vollständig ist, was ich aber gern noch nacharbeiten will. Schließlich
 ist die große Menge von \Biblatex unterstützter Eintragstypen einer
-seiner besonderen Vorteile. Unterstützt werden zurzeit die in Tabelle
-\ref{tab:unterstuetzte-typen} aufgeführten primären Eintragstypen;
+seiner besonderen Vorteile. Unterstützt werden zurzeit die in
+Abschnitt \ref{sec:eintragstypen} aufgeführten primären Eintragstypen;
 andere Typen können funktionieren, müssen aber nicht. Daneben gibt es
 noch einige Aliastypen, \dh Typen, die selbst nur Verweise auf einen
 anderen Typ sind, die aber aus logischen Gründen vorzuziehen
@@ -118,22 +118,20 @@ weitere Informationen diesbezüglich sei auf die
 
 \begin{table}
   \centering
-
-  @article @book @commentary @inbook @incollection @inproceedings
-  @jurisdiction @legislation @manual @misc @report @thesis
-
-  \caption{Unterstützte Eintragstypen}
-  \label{tab:unterstuetzte-typen}
-\end{table}
-
-\begin{table}
-  \centering
   \begin{tabular}{ll}
     \textbf{Name} & \textbf{Alias für}\\
     \hline
-    @mvbook         & @book\\
     @bookinbook     & @book\\
-    @suppbook       & @book
+    @inreference    & @incollection\\
+    @mvbook         & @book\\
+    @mvcollection   & @collection\\
+    @mvproceedings  & @proceedings\\
+    @mvreference    & @reference\\
+    @reference      & @collection\\
+    @review         & @article\\
+    @suppbook       & @inbook\\
+    @suppcollection & @incollection\\
+    @supperiodical  & @article
   \end{tabular}
   \caption{Aliastypen}
   \label{tab:aliastypen}
@@ -200,7 +198,7 @@ Dieses Paket definiert einige neue Paketoptionen, die beim Latex des
   der Autorennachnamen (etwa „Jarass/Pieroth“) definieren.
 \end{description}
 
-\section{Einzelne Eintragstypen}
+\section{Einzelne Eintragstypen}\label{sec:eintragstypen}
 
 Im Gegensatz zum Paket \verb+biblatex-juradiss+ versucht sich dieser
 Stil möglichst dicht an den Bedeutungen der Eintragstypen wie sie in
@@ -278,6 +276,55 @@ beurteilen\footcite[\S\,1 Rnr. 3]{muscheler}.
 
 Die Vertreter der Länder im Bundesrat können ihre Stimmen nur
 einheitlich abgeben\footcite[\S\,7 Rnr. 343ff]{ipsen}.
+
+\printbibliography
+\end{rubexample}
+
+\subsection{@collection}
+
+\verb+@collection+ selbst bezeichnet Sammelbände als Ganzes, also etwa
+eine Festschrift, in der Artikel einzelner Autoren untergebracht
+sind. Es kommt nur selten vor, dass man eine solche Publikation
+\emph{als Ganzes} zitiert, dagegen zitiert man häufig aus den
+einzelnen enthaltenen Artikeln (dann:
+\verb+@incollection+).
+
+Von Interesse ist \verb+@collection+ eigentlich nur, weil er hinter
+\verb+@reference+ steht (Aliastyp, siehe auch Tabelle
+\ref{tab:aliastypen} auf Seite \pageref{tab:aliastypen}), einem Typ,
+der für Einträge in Lexika gedacht ist, die im weitesten Sinne ja auch
+Sammelbände kleiner Artikel sind, aber nicht nach Artikel, sondern
+nach dem Gesamtwerk zitiert werden. Nichtsdestotrotz steht
+\verb+@collection+ auch direkt zur Verfügung.
+
+In Fußnoten wird dieser Typ über seinen Herausgeber zitiert, es sei
+denn, der Eintrag weist ein Feld \verb+author+ auf, in welchem Falle
+eine Konstruktion mit „in:“ gewählt wird. Das ist aber nicht zu
+empfehlen, da ein solcher Autor nicht im Literaturverzeichnis
+aufgeführt wird. Tatsächlich wird das Feld \verb+author+ für
+\verb+@collection+ von \Biblatex auch eigentlich gar nicht
+unterstützt; man sollte von dieser Möglichkeit also eher keinen
+Gebrauch machen. Es mag dagegen durchaus sinnvoll sein, ein
+\verb+shorthand+ zu vergeben, um eine sinnvolle Fußnoteninformation zu
+erreichen (im Übrigen wird bei Angabe eines \verb+shorthand+ der
+Eintrag im Literaturverzeichnis um ein „zitiert als: shorthand“ ergänzt).
+
+\begin{rubexample}
+\begin{verbatim}
+@reference{lexikon,
+  title = "Deutsches Wörterbuch",
+  editor = "Karl-Dieter Bünting",
+  year = 1996,
+  publisher = "Isis Verlag AG",
+  location = "Chur"
+}
+\end{verbatim}
+
+Der Begriff des „Guanako“ ist möglicherweise nicht jedem bekannt und
+bedarf daher einer Erläuterung. Bei einem Guanako handelt es sich um
+eine im Süden und Westen Südamerikas vorkommende Tierart, ähnlich dem
+Lama, deren Fell lang, dicht und von fahler, rotbrauner Farbe
+ist\footcite[480]{lexikon}.
 
 \printbibliography
 \end{rubexample}
