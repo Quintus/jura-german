@@ -156,11 +156,11 @@
 }
 
 \newbibmacro{rubcite:misc}{%
-  \iffieldundef{author}
+  \ifnameundef{author}%
     {\printnames[last-only-italic]{editor}}%
     {\printnames[last-only-italic]{author}}%
-  \setunit{\nametitledelim}
-  \printfield{title}%
+  \setunit{\nametitledelim}%
+  \usebibmacro{cite:title}%
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
