@@ -721,6 +721,53 @@ Gerichte erkannt\footcite{bverfge-24-236}.
 \printbibliography
 \end{rubexample}
 
+\subsection{@legal}
+
+Diesen Typ wird man in rechtswissenschaftlichen Aufsätzen aller
+Wahrscheinlichkeit nicht benötigen. Da er dem Namen nach aber mit der
+Rechtswissenschaft zusammenhängt, sah der Autor es als opportun an,
+Unterstützung für ihn in diesen Stil aufzunehmen. Die Standardstile
+von \Biblatex unterstützen diesen Typen nur als Alias für \verb+@misc+.
+
+Mit \verb+@legal+ erfasst man Gesetze und Verträge, nicht dagegen die
+Unterlagen im Gesetzgebungsverfahren, für welche \verb+@legislation+
+gedacht ist. Die zulässigen Felder lauten:
+
+\begin{description}
+\item[title] \emph{(erforderlich)} Titel des Gestzes bzw. des
+  Vertrages.
+\item[shorttitle] Kurztitel, falls verfügbar (etwa „BGB“).
+\item[origdate] Datum der Bekanntmachung des Gesetzes bzw. der
+  ursprünglichen, ungeänderten Fassung eines Vertrages.
+\item[date] Datum der letzten Änderung am Gesetz bzw. am Vertrag.
+\item[note] Ein hinter dem Änderungsdatum in Klammern anzuführender
+  Hinweis. Für Gesetze ist dies typischerweise die Seite im
+  Bundesgesetzblatt („BGBl. I S. 2749“).
+\end{description}
+
+\begin{rubexample}
+\begin{verbatim}
+@legal{bgb,
+  title = "Bürgerliches Gesetzbuch",
+  shorttitle = "BGB",
+  origdate = "2002-01-02",
+  date = "2012-12-20",
+  note = "BGBl. I S. 2749",
+  pagination = "section"
+}
+@legal{vertrag,
+  title = "Wichtiger Vertrag",
+  origdate = "2014-05-06",
+  pagination = "section"
+}
+\end{verbatim}
+
+Die gesetzliche Regelung\footcite[582]{bgb} wird durch den Vertrag nur
+wiedergegeben\footcite[11]{vertrag}.
+
+\printbibliography
+\end{rubexample}
+
 \subsection{@legislation}
 
 \verb+@legislation+ dient der Erfassung amtlicher Dokumente der
@@ -747,6 +794,10 @@ portabel. Im Gegensatz zu \verb+@jurisdiction+ waren hier aber
 immerhin keine gänzlich neuen Felder erforderlich, vielmehr können die
 bestehenden Felder sinnvoll verwendet werden. Die zulässigen Felder
 lauten:
+
+Dieser Typ ist entgegen der Dokumentation von \Biblatex nicht für
+fertige Gesetze vorgesehen. Der Autor hält diese Einordnung für einen
+logischen Fehler und empfiehlt dafür stattdessen \verb+@legal+.
 
 \begin{description}
 \item[author] \emph{(erforderlich)} Name des Organs („Deutscher
