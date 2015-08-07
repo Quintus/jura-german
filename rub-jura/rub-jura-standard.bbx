@@ -199,6 +199,7 @@
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
+  \usebibmacro{zitiertals}%
   \newunit\newblock
   \iftoggle{bbx:related}
     {\usebibmacro{related:init}%
@@ -761,10 +762,7 @@
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
-  \iffieldundef{shorthand}
-    {}
-    {\setunit{\addsemicolon\addspace}\newblock
-      \printtext{\zitiertals{} \textit{Bearbeiter}, in: \printfield{shorthand}}}
+  \usebibmacro{commentary:zitiertals}%
   \newunit\newblock
   \iftoggle{bbx:related}
     {\usebibmacro{related:init}%
@@ -843,10 +841,7 @@
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
-  \iffieldundef{shorthand}
-    {}
-    {\setunit{\addsemicolon\addspace}\newblock
-      \printtext{\zitiertals{} \printfield{shorthand}}}
+  \usebibmacro{zitiertals}%
   \newunit\newblock
   \iftoggle{bbx:related}
     {\usebibmacro{related:init}%
@@ -869,6 +864,18 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hilfsmakros
+
+\newbibmacro*{zitiertals}{%
+  \iffieldundef{shorthand}%
+    {}%
+    {\setunit{\addsemicolon\addspace}\newblock%
+      \printtext{\zitiertals{} \printfield{shorthand}}}}
+
+\newbibmacro*{commentary:zitiertals}{%
+  \iffieldundef{shorthand}%
+    {}%
+    {\setunit{\addsemicolon\addspace}\newblock%
+     \printtext{\zitiertals{} \textit{Bearbeiter}, in: \printfield{shorthand}}}}
 
 \newbibmacro*{maintitle+title}{%
   \iffieldsequal{maintitle}{title}
