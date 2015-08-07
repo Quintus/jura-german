@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper,DIV=calc]{scrartcl}
+\documentclass[11pt,a4paper,DIV=calc,draft]{scrartcl}
 \usepackage[ngerman]{babel}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=rub-jura]{biblatex}
@@ -28,6 +28,8 @@
 \newcommand\zB{z.\,B.\xspace}
 \AtBeginDocument{\renewcommand\dh{d.\,h.\xspace}}
 
+\renewcommand\bibsetup{\raggedright}
+
 \newenvironment{rubexample}{\par\vspace{\baselineskip}\hrule\par\begin{refsection}}{\end{refsection}\par\hrule\par\vspace{\baselineskip}}
 
 \KOMAoptions{DIV=last}
@@ -40,6 +42,7 @@
 \maketitle{}
 
 \tableofcontents{}
+\listoftables{}
 
 \section{Einführung}
 
@@ -65,7 +68,16 @@ Stelle des Gerichts. Außer im Literaturverzeichnis, wo dies nicht ins
 Gewicht fällt. Kommentare als spezifisch juristische Literatur sind
 ohnehin ein Spezialfall.
 
-\section{Einschränkungen}
+Da es sich um einen \Biblatex-Stil handelt, erfolgt die Einbindung wie
+bei jedem anderen \Biblatex-Stil auch:
+
+\begin{verbatim}
+\usepackage[backend=biber,style=rub-jura]{biblatex}
+\end{verbatim}
+
+\section{Allgemeine Hinweise}
+
+\subsection{Einschränkungen}
 
 Dieser Stil funktioniert für mich, was aber noch lange nicht heißt,
 dass er für andere Leute geeignet ist. Er kommt den Vorgaben an der
@@ -93,27 +105,43 @@ Probleme, die sich nicht ohne weiteres lösen lassen:
   Ich rate von der Nutzung daher für den Moment ab. Wer es dennoch
   wagen will, sollte sowohl den \verb+ibid+- als auch den
   \verb+loccit+-Tracker aktivieren.
-\item \verb+\multinamedelim+ und \verb+\finalnamedelim+ können nicht
-  gefahrlos überschrieben werden, da einige Typen an bestimmten
-  Stellen das Makro intern neu setzen. Der Nutzer dieses Stils wird
-  sich also mit dem Standardaufbau von Namenslisten zufrieden geben
-  müssen (oder so tief in die Interna einsteigen, dass er die
-  betroffenen Bibmakros ändern kann).
+\item Die Befehle \verb+\multinamedelim+ und \verb+\finalnamedelim+
+  können nicht gefahrlos überschrieben werden, da einige Typen an
+  bestimmten Stellen das Makro intern neu setzen. Der Nutzer dieses
+  Stils wird sich also mit dem Standardaufbau von Namenslisten
+  zufrieden geben müssen (oder so tief in die Interna einsteigen, dass
+  er die betroffenen Bibmakros ändern kann).
 \end{itemize}
 
 Der Stil ist zurzeit „Work in Progress“ und wohl noch lange nicht
 fertig. Es ist daher durchaus möglich, dass die obigen Restriktionen
-noch aufgehoben werden. Auch weise ich darauf hin, dass die minutiöse
-Anpassung der Fußnoten auf die jeweiligen Eintragstypen nicht
-vollständig ist, was ich aber gern noch nacharbeiten will. Schließlich
-ist die große Menge von \Biblatex unterstützter Eintragstypen einer
-seiner besonderen Vorteile. Unterstützt werden zurzeit die in
-Abschnitt \ref{sec:eintragstypen} aufgeführten primären Eintragstypen;
-andere Typen können funktionieren, müssen aber nicht. Daneben gibt es
-noch einige Aliastypen, \dh Typen, die selbst nur Verweise auf einen
-anderen Typ sind, die aber aus logischen Gründen vorzuziehen
-sind. Diese werden in Tabelle \ref{tab:aliastypen} aufgelistet; für
-weitere Informationen diesbezüglich sei auf die
+noch aufgehoben werden.
+
+Mittlerweile unterstützt dieser Stil eine ganz ansehnliche Anzahl der
+von \Biblatex angebotenen Eintragstypen, insbesondere werden so gut
+wie alle juristische Themen betreffenden Typen unterstützt. Einzige
+Ausnahme davon ist momentan noch \verb+@patent+, weil mir die fachlich
+korrekte Zitierweise in Literaturverzeichnis und Fußnote für deutsche
+Patente schlicht nicht bekannt ist. Über einen Hinweis würde ich mich
+daher sehr freuen.
+
+Ursprünglich basierte \software{rub-jura} auf dem
+\software{authortitle}-Stil von \Biblatex aus \TeX{}live 2015, hat
+aber einige massive Anpassungen hinter sich. So ist die Ausgabe für
+die Fußnoten minutiös auf die einzelnen Eintragstypen abgestimmt und
+nicht so generisch wie \software{authortitle} es handhabte, und auch
+das Literaturverzeichnis hat zahlreiche Anpassungen hinter
+sich. Dennoch vermag ich aufgrund der ursprünglichen Abstammung dieses
+Stils keine Unterstützung von \LaTeX-Software älter als \TeX{}Live
+2015 auszusprechen.
+
+Betreffs der Eintragstypen werden zurzeit die in Abschnitt
+\ref{sec:eintragstypen} aufgeführten primären Eintragstypen
+unterstützt; andere Typen können funktionieren, müssen aber
+nicht. Daneben gibt es noch einige Aliastypen, \dh Typen, die selbst
+nur Verweise auf einen anderen Typ sind, die aber aus logischen
+Gründen vorzuziehen sind. Diese werden in Tabelle \ref{tab:aliastypen}
+aufgelistet; für weitere Informationen diesbezüglich sei auf die
 \Biblatex-Do\-ku\-men\-ta\-tion verweisen.
 
 \begin{table}
@@ -136,7 +164,7 @@ weitere Informationen diesbezüglich sei auf die
   \label{tab:aliastypen}
 \end{table}
 
-\section{Inkompatibilitäten}\label{sec:inkompat}
+\subsection{Inkompatibilitäten}\label{sec:inkompat}
 
 Die ungewöhnliche Zitierweise deutscher Juristen bringt es mit sich,
 dass dieser Stil nur begrenzt kompatibel mit anderen Stilen ist. Ich
@@ -153,27 +181,73 @@ Dieser Stil greift auf Funktionalitäten von \Biblatex zurück, die
 ausschließlich mit \software{Biber} als Backend gewährleistet
 sind. Ein Einsatz von \software{Bib\TeX{}} verbietet sich somit.
 
-Außerdem definiert dieser Stil einige neue Paketoptionen, die von
-anderen Stilen nicht verstanden werden:
+Die in Abschnitt \ref{sec:optionen} beschriebenen Paketoptionen sind
+spezifisch auf diesen Stil zugeschnitten und werden von anderen Stilen
+nicht unterstützt.
 
-\begin{itemize}
-\item \verb+morejurisdict+
-\item \verb+cmtryedit+
-\end{itemize}
+\subsection{Sonstiges}
 
-\section{Einbindung}
-
-Es handelt sich um einen \Biblatex-Stil, daher erfolgt die Einbindung
-wie bei jedem anderen \Biblatex-Stil auch.
+Bei der Angabe von Institutionen, Gerichten und Organen als Autor in
+einem Namensfeld ist darauf zu achten, durch doppeltes Quoting die
+Namenserkennungsfunktion von \Biblatex auszuschalten. So ist der
+Deutsche Bundestag als solcher im Literaturverzeichnis aufzuführen,
+und nicht als \emph{Herr Bundestag, mit Vornamen Deutscher}. Ein
+korrekter Eintrag sieht dann so aus:
 
 \begin{verbatim}
-\usepackage[backend=biber,style=rub-jura]{biblatex}
+author = {{Deutscher Bundestag}}
 \end{verbatim}
 
-\section{Paketoptionen}
+Zwar handelt es sich dabei nicht um ein speziell diesen Stil
+betreffendes Problem, sondern um allgemeine Gebrauchstechniken von
+\Biblatex, aber ein gesonderter Hinweis schadet nicht. Insbesondere
+vor dem Hintergrund, dass einige der von diesem Stil definierten Typen
+ausschließlich den Nachnamen allein ausgeben und es ansonsten zu nicht
+unerheblicher Verwunderung kommen könnte, wenn man doch den „Deutschen
+Bundestag“ als Autor angegeben hat und indessen nur „Bundestag“ ausgegeben
+wird.
+
+Abhängig vom gewählten (oder geforderten) Satzspiegel kann es sinnvoll
+sein, das Literaturverzeichnis nicht im Blocksatz, sondern als
+linksbündigen Flattersatz zu setzen, sodass schwerwiegende Probleme
+beim Umbruch verhindert werden. So kann es oftmals geschehen, dass bei
+Blocksatz die bibliografischen Angaben in den rechten Seitenrand
+hineinreichen, was extrem hässlich ist (und von \LaTeX{} mit Warnungen
+quittiert wird). Bibliografische Angaben kann man aber auch nicht
+einfach umformulieren, sie folgen einem strikten Schema, das nicht
+verletzt werden darf. Dieser Problematik kommt der optisch vielleicht
+nicht ganz so angenehme, aber immer noch eher als rechtseitige
+Überläufe hinnehmbare Flattersatz entgegen, der in der
+Dokumentpräambel so aktiviert werden kann:
+
+\begin{verbatim}
+\renewcommand\bibsetup{\raggedright}
+\end{verbatim}
+
+Dies ist eine Problematik, die erfahrungsgemäß von den juristischen
+Lehrstühlen nicht erkannt wird, denn da man dort allumfassend
+\software{Word} einsetzt, stößt man niemals auf sie: \software{Word}
+zieht allen typografischen Regeln entgegen die Zeile wie Kaugummi in
+die Länge, bis sich wahre Seen von Weißraum zwischen den Wörtern
+auftun. Die Korrektoren sind gegenüber dieses typografischen Monstrums
+mittlerweile wohl abgestumpft und finden den optisch an dieser Stelle
+vorzugswürdigen Flattersatz beanstandenswert. \emph{O tempora, o
+  mores!} Mit dem Interwort-Abstand aber verlässt man die Domäne von
+\LaTeX{} und landet bei reinem \TeX{}. Diesen Wert lokal für einen
+Absatz zu verändern, ist faktisch
+unmöglich\footnote{\url{https://tex.stackexchange.com/questions/87073}}. Es
+ist allein möglich, durch vorsichtiges Taktieren mit
+\verb+\addfontfeatures+ aus dem Paket \software{fontspec} den
+Wordabstand global für das gesamte Dokument zu ändern:
+
+\begin{verbatim}
+\addfontfeatures{WordSpace = 2}
+\end{verbatim}
+
+\section{Paketoptionen}\label{sec:optionen}
 
 Dieses Paket definiert einige neue Paketoptionen, die beim Latex des
-\verb+biblatex+-Pakets angegeben werden können.
+Paketes \verb+biblatex+ angegeben werden können.
 
 \begin{description}
 \item[morejurisdict] Wird ein \verb+@jurisdiction+-Eintrag zitiert, so
@@ -210,20 +284,21 @@ besonderen Eigenarten juristischer Literatur.
 
 \subsection{@article}
 
-Mit \verb+@article+ werden Publikationen in Fachzeitschriften und laut
-\Biblatex-Do\-ku\-men\-ta\-tion auch Aritkel in Tageszeitungen erfasst (auch
-wenn ich letzteres für unglücklich halte und einen separaten
-Eintragstyp befürworte). Artikel werden stets nach Seitenzahl und
-niemals nach Randnummer zitiert; Einträge dieses Typs geben in der
-Fußnote daher immer die Startseite des Artikels aus, unabhängig davon,
-ob man zusätzlich eine Fundstellenseite über das \verb+postnote+-Feld
-angibt.
+Mit \verb+@article+ werden Publikationen in Fachzeitschriften und
+gemäß der Do\-ku\-men\-ta\-tion von \Biblatex auch Aritkel in
+Tageszeitungen erfasst (auch wenn ich letzteres für unglücklich halte
+und einen separaten Eintragstyp befürworte). Artikel werden stets nach
+Seitenzahl und niemals nach Randnummer zitiert; Einträge dieses Typs
+geben in der Fußnote daher immer die Startseite des Artikels aus,
+unabhängig davon, ob man zusätzlich eine Fundstellenseite über das
+\verb+postnote+-Feld angibt.
 
 \begin{rubexample}
 \begin{verbatim}
 @article{hoernle-huster,
   author = "Tatjana Hörnle and Stefan Huster",
-  title = "Wie weit reicht das Erziehungsrecht der Eltern?",
+  title = "Wie weit reicht das Erziehungsrecht der
+    Eltern?",
   subtitle = "Am Beispiel der Beschneidung von Jungen",
   journaltitle = "JZ",
   year = 2013,
@@ -353,26 +428,27 @@ wesentlichen drei Kategorien von Kommentaren zu geben:
   bekannt sind, dass man den Titel bzw. Kurztitel nicht mehr angibt.
 \end{enumerate}
 
-Kommentare der dritten Kategorie sind es, die den Quellcode für
-\verb+@commentary+ recht komplex werden lassen. Leider fällt mit
-dem \name{Palandt} ein recht wichtiger Kommentar in diese Kategorie,
-sie kann deshalb nicht einfach als Sonderfall abgeschrieben werden,
-den man eben einfach gleich wie solche der ersten Kategorie behandeln
-kann. Während allgemein erwartet wird dass man den \name{Fischer} als
-„\name{Fischer}, StGB, §…“ zitiert (weil er in die erste Kategorie
-fällt), stieße es doch auf Widerstand, den \name{Palandt} als
-„\name{Palandt}, BGB, §…“ zu zitieren. Letzterer muss vielmehr wie ein
-Eigennamenskommentar gleich dem \name{Münchener Kommentar} in der
-Fußnote erscheinen: „\name{Palandt}, §…“, „\name{MüKo}, §…“ (natürlich
-jeweils mit Bearbeiter vorweg). Im Literaturverzeichnis aber müssen
-die Kommentare der zweiten Kategorie unter ihrem Eigennamen als
-Langtitel („Münchener Kommentar zum Bürgerlichen Gesetzbuch“)
-aufgeführt und einsortiert werden, Kommentare der dritten Kategorie,
-obwohl doch zitiert als hätten sie Eigennamen, werden jedoch
-einsortiert wie Kommentare der ersten Kategorie, \dh unter dem Namen
-des Begründers einschließlich Vorname. Um dieser Komplexität Rechnung
-zu tragen, führt dieser Stil eine eigene Eintragsoption für Einträge
-des Typs \verb+@commentary+ ein:
+Kommentare der dritten Kategorie sind es, die den Quellcode der
+Implementation für \verb+@commentary+ recht komplex werden
+lassen. Leider fällt mit dem \name{Palandt} ein recht wichtiger
+Kommentar in diese Kategorie, sie kann deshalb nicht einfach als
+Sonderfall abgeschrieben werden, den man eben einfach gleich wie
+solche der ersten Kategorie behandeln kann. Während allgemein erwartet
+wird dass man den \name{Fischer} als „\name{Fischer}, StGB, §…“
+zitiert (weil er in die erste Kategorie fällt), stieße es doch auf
+Widerstand, den \name{Palandt} als „\name{Palandt}, BGB, §…“ zu
+zitieren. Letzterer muss vielmehr wie ein Eigennamenskommentar gleich
+dem \name{Münchener Kommentar} in der Fußnote erscheinen:
+„\name{Palandt}, §…“, „\name{MüKo}, §…“ (natürlich jeweils mit
+Bearbeiter vorweg). Im Literaturverzeichnis aber müssen die Kommentare
+der zweiten Kategorie unter ihrem Eigennamen als Langtitel („Münchener
+Kommentar zum Bürgerlichen Gesetzbuch“) aufgeführt und einsortiert
+werden, Kommentare der dritten Kategorie, obwohl doch zitiert als
+hätten sie Eigennamen, werden jedoch einsortiert wie Kommentare der
+ersten Kategorie, \dh unter dem Namen des Begründers einschließlich
+Vorname. Um dieser Komplexität Rechnung zu tragen, führt dieser Stil
+eine eigene Eintragsoption für Einträge des Typs \verb+@commentary+
+ein:
 
 \begin{description}
 \item[citebytitle] Wird diese Option angegeben, wird der Titel des
@@ -380,7 +456,7 @@ des Typs \verb+@commentary+ ein:
   das Literaturverzeichnis eingepflegt. Fehlt sie, wird der Kommentar
   stattdessen unter dem Namen des Herausgebers eingepflegt.
 
-  Diese Option sollte nur zusammen mit den Optionen
+  Diese Option sollte nur zusammen mit den zwei weiteren Optionen
   \verb+useauthor=false+ und \verb+useeditor=false+ angegeben
   werden. Dies stellt sicher, dass \Biblatex den Eintrag nicht nur mit
   dem Titel voran formatiert, sondern ihn auch nach dem Titel
@@ -388,7 +464,7 @@ des Typs \verb+@commentary+ ein:
   \name{Westermann} einsortiert wird).
 \end{description}
 
-Weiterhin zitiert man Eigennamenskommentare auch in den Fußnoten nicht
+Weiterhin zitiert man die Eigennamenskommentare auch in den Fußnoten nicht
 mit ihren Herausgebern, sondern mit dem Eigennamen in gekürzter
 Form. Aus Sicht von \Biblatex handelt es sich dabei um eine vollstände
 Ersetzung aller bibliografischen Angaben durch einen einzigen,
@@ -424,8 +500,8 @@ angehangen.
 Ähnlich wie bei \verb+@incollection+ (Abschnitt
 \ref{sec:incollection}) ist die Formatierung eines Kommentars im
 Literaturverzeichnis sehr komplex und nutzt unterschiedliche
-Ausgabeschemata für Namen. Eine Anpassung ohne tiefergehende
-Kenntnisse des Quellcodes dieses Stils scheidet aus.
+Ausgabeschemata für Namen. Eine Anpassung ohne vorhandene
+tiefergehende Kenntnisse des Quellcodes dieses Stils scheidet aus.
 
 \begin{rubexample}
 \begin{verbatim}
@@ -477,7 +553,7 @@ All\footcite[Ellenberger][\S\,12 Rnr. 7]{palandt15}
 auf den
 Tannenspitzen\footcites[][\S\,242 Rnr. 10]{fischer62}[Laufhütte][\S\,242\,Rnr. 15]{leipzig06}\ldots
 
-\printbibliography
+\printbibliography{}
 \end{rubexample}
 
 \subsection{@inbook}
@@ -491,6 +567,7 @@ zu \verb+@incollection+ auch nicht zwangsweise mit einer Seitenangabe
 zitiert werden muss (da \verb+@incollection+ stets die Startseite des
 Beitrags in der Fußnote mit ausgibt, dieser Typ dies jedoch nicht
 tut).
+
 
 Für diesen Typ empfiehlt sich die Angabe des Feldes
 \verb+chapter+. Sie führt (übrigens auch bei anderen Typen) dazu, dass
@@ -972,6 +1049,18 @@ auf\footcite[123]{dissertation}.
 
 \printbibliography
 \end{rubexample}
+
+\section{Impressum}
+
+Marvin Gülker\\
+Vaersthausener Str. 73a\\
+59425 Unna
+
+\begin{tabbing}
+  Tel. \= 02303 \= / \= 884365\\
+  Fax  \> 02303 \> / \> 671108\\
+  E-Mail \>     \> m-guelker@quintilianus.eu
+\end{tabbing}
 
 \end{document}
 
