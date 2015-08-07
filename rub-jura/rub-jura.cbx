@@ -145,8 +145,20 @@
      {}%
 }
 
+\newbibmacro{rubcite:collection}{%
+  \ifnameundef{author}%
+    {\printnames[last-only-italic]{editor}%
+     \setunit{\nametitledelim}}%
+    {\printnames[last-only-italic]{author}%
+      \setunit{\nametitledelim}%
+      \usebibmacro{in:}}%
+    \usebibmacro{cite:title}%
+}
+
 \newbibmacro{rubcite:misc}{%
-  \printnames[last-only-italic]{author}%
+  \iffieldundef{author}
+    {\printnames[last-only-italic]{editor}}%
+    {\printnames[last-only-italic]{author}}%
   \setunit{\nametitledelim}
   \printfield{title}%
 }
@@ -164,6 +176,14 @@
           {\usebibmacro{rubcite:book}}{%
         \ifentrytype{article}%
           {\usebibmacro{rubcite:article}}{%
+        \ifentrytype{collection}%
+          {\usebibmacro{rubcite:collection}}{%
+        \ifentrytype{reference}%
+          {\usebibmacro{rubcite:collection}}{%
+        \ifentrytype{mvcollection}%
+          {\usebibmacro{rubcite:collection}}{%
+        \ifentrytype{mvreference}%
+          {\usebibmacro{rubcite:collection}}{%
         \ifentrytype{inbook}%
           {\usebibmacro{rubcite:inbook}}{%
         \ifentrytype{incollection}%
@@ -174,7 +194,7 @@
           {\usebibmacro{rubcite:commentary}}{%
         \ifentrytype{jurisdiction}%
           {\usebibmacro{rubcite:jurisdiction}}%
-          {\usebibmacro{rubcite:misc}}}}}}}}}}%
+          {\usebibmacro{rubcite:misc}}}}}}}}}}}}}}%
     {\usebibmacro{cite:shorthand}}}
 
 \newbibmacro*{citetitle}{%
