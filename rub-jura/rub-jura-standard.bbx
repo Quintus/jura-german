@@ -849,6 +849,43 @@
     {}%
   \usebibmacro{finentry}}
 
+% Bürgerliches Gesetzbuch, i.d.F. vom 2. Jan. 2002, zuletzt geändert
+% am 20.12.2012 (BGBl. I S. 2749).
+\DeclareBibliographyDriver{legal}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{title}%
+  \newunit\newblock
+  \iffieldundef{origyear}
+    {}
+    {\printtext{i.\,d.\,F. vom\space}\printorigdate}%
+  \newunit\newblock
+  \iffieldundef{year}
+    {}
+    {\printtext{zuletzt geändert am\space}\printdate}%
+  \setunit{\addspace}\newblock
+  \iffieldundef{note}
+    {}
+    {\printtext[parens]{\printfield{note}}}%
+  \newunit\newblock
+  \usebibmacro{series+number}%
+  \newunit\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \usebibmacro{doi+eprint+url}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+
 \DeclareBibliographyAlias{mvbook}{book}
 \DeclareBibliographyAlias{bookinbook}{inbook}
 \DeclareBibliographyAlias{suppbook}{inbook}
