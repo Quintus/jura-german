@@ -952,12 +952,24 @@
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
-  \usebibmacro{volume+number+eid}%
-  \setunit{\addspace}%
-  \usebibmacro{issue+date}%
-  \setunit{\addcolon\space}%
-  \usebibmacro{issue}%
+  \usebibmacro{volume+number+issue+date}%
+  % Unterschied zum Standard: Hier keine Datums- oder Ausgabenangabe,
+  % weil das schon in volume+number+issue+date passiert.
   \newunit}
+
+% Eigenes Makro zwecks Unterscheidung der zwei Fälle bei
+% der Bibliographierung von Zeitschriftenartikeln, abhängig
+% davon, ob ein Band angegeben wurde oder nicht:
+%   JuS 1984, S. 161-173
+%   DStR 7 (1049), S. 161-173
+\newbibmacro*{volume+number+issue+date}{%
+  \iffieldundef{volume}
+    {\printdate}
+    {\printfield{volume}%
+      \usebibmacro{issue+date}}
+    \setunit*{\adddot}%
+    \printfield{number}%
+}
 
 \newbibmacro*{volume+number+eid}{%
   \printfield{volume}%
