@@ -13,21 +13,21 @@
 \newtoggle{bbx:related}
 \newtoggle{bbx:citebytitle}
 
-\DeclareBibliographyOption{isbn}[true]{%
+\DeclareBibliographyOption[boolean]{isbn}[true]{%
   \settoggle{bbx:isbn}{#1}}
-\DeclareBibliographyOption{url}[true]{%
+\DeclareBibliographyOption[boolean]{url}[true]{%
   \settoggle{bbx:url}{#1}}
-\DeclareBibliographyOption{doi}[true]{%
+\DeclareBibliographyOption[boolean]{doi}[true]{%
   \settoggle{bbx:doi}{#1}}
-\DeclareBibliographyOption{eprint}[true]{%
+\DeclareBibliographyOption[boolean]{eprint}[true]{%
   \settoggle{bbx:eprint}{#1}}
-\DeclareBibliographyOption{related}[true]{%
+\DeclareBibliographyOption[boolean]{related}[true]{%
   \settoggle{bbx:related}{#1}}
 
 % Neue Eintragsoption citebytitle: Wenn gesetzt, wird ein @commentary
 % unter seinem title geführt und nicht nach den Namen seiner
 % Herausgeber.
-\DeclareEntryOption{citebytitle}[true]{\settoggle{bbx:citebytitle}{#1}}
+\DeclareEntryOption[boolean]{citebytitle}[true]{\settoggle{bbx:citebytitle}{#1}}
 
 \ExecuteBibliographyOptions{isbn,url,doi,eprint,related}
 
@@ -41,7 +41,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -79,7 +79,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -127,7 +127,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -164,7 +164,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{editor+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -211,7 +211,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -262,7 +262,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -311,7 +311,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -362,7 +362,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -409,7 +409,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -444,7 +444,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -481,7 +481,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -519,7 +519,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{editor}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title+issuetitle}%
   \newunit
   \printlist{language}%
@@ -548,7 +548,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{editor+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -596,7 +596,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -637,7 +637,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -674,7 +674,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
   \printlist{language}%
@@ -774,7 +774,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \printnames[last-only-italic]{author}% Im Standardstil wird \labelnamepunct unten missachtet?!
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \printfield{type}
   \printtext{v.\addspace}%
   \printdate{}%
@@ -801,7 +801,7 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \printnames[last-only-italic]{author}% % Im Standardstil wird \labelnamepunct unten missachtet?!
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{maintitle+title}%
   \newunit
   \printlist{language}%
@@ -952,22 +952,40 @@
     {\newunit
      \printfield{series}%
      \setunit{\addspace}}%
-  \usebibmacro{volume+number+issue+date}%
+  \usebibmacro{volume+number+eid}%
   \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
   \usebibmacro{issue}%
   \newunit}
 
-\newbibmacro*{volume+number+issue+date}{%
-  \iffieldundef{volume}
-    {\usebibmacro{date}}
-    {\printfield{volume}%
-      \usebibmacro{issue+date}}
-    \setunit*{\adddot}%
-    \printfield{number}%
-}
+\newbibmacro*{volume+number+eid}{%
+  \printfield{volume}%
+  \setunit*{\adddot}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}
+
+\newbibmacro*{title+issuetitle}{%
+  \usebibmacro{periodical}%
+  \setunit*{\addspace}%
+  \iffieldundef{series}
+    {}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \printfield{volume}%
+  \setunit*{\adddot}%
+  \printfield{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
 
 \newbibmacro*{issue+date}{%
-  \setunit*{\addspace}%
   \printtext[parens]{%
     \iffieldundef{issue}
       {\usebibmacro{date}}
@@ -986,7 +1004,7 @@
     test {\iffieldundef{eventyear}}
   }
     {}
-    {\setunit{\addspace}%
+    {\setunit*{\addspace}%
      \printtext[parens]{%
        \printfield{venue}%
        \setunit*{\addcomma\space}%
@@ -999,10 +1017,24 @@
   \printfield{number}%
   \newunit}
 
+\newbibmacro*{publisher+location+date}{%
+  \printlist{location}%
+  \iflistundef{publisher}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
+  \printlist{publisher}%
+  \setunit*{\addcomma\space}%
+  \usebibmacro{date}%
+  \newunit}
+
 \newbibmacro*{institution+location+date}{%
+  \printlist{location}%
+  \iflistundef{institution}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcolon\space}}%
   \printlist{institution}%
   \setunit*{\addcomma\space}%
-  \usebibmacro{location+date}%
+  \usebibmacro{date}%
   \newunit}
 
 \newbibmacro*{organization+location+date}{%
@@ -1017,19 +1049,15 @@
 
 \newbibmacro*{location+date}{%
   \printlist{location}%
-  \setunit*{\space}%
+  \setunit*{\addcomma\space}%
   \usebibmacro{date}%
   \newunit}
 
 \newbibmacro*{chapter+pages}{%
+  \printfield{chapter}%
   \setunit{\bibpagespunct}%
-  \iffieldundef{chapter}%
-    {\printfield{pages}%
-     \newunit}%
-    {\printfield{chapter}%
-     \setunit{\addspace}%
-     \printfield[chapterpages]{pages}%
-     \setunit{\addspace}}}
+  \printfield{pages}%
+  \newunit}
 
 \newbibmacro*{note+pages}{%
   \printfield{note}%

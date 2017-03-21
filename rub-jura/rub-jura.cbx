@@ -39,12 +39,12 @@
 
 % Format für (kursive) Nachnamen
 \DeclareNameFormat{last-only-italic}{%
-  \usebibmacro{name:last}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}%
+  \usebibmacro{name:last}{\textit{\namepartfamily}}{\textit{\namepartgiven}}{\textit{\namepartprefix}}{\textit{\namepartsuffix}}%
   \ifmorenames{%
     \textit{\usebibmacro{name:andothers}}}%
     {}}
 \DeclareNameFormat{last-only}{%
-  \usebibmacro{name:last}{#1}{#3}{#5}{#7}
+  \usebibmacro{name:last}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}
   \ifmorenames{%
     \usebibmacro{name:andothers}}%
     {}}

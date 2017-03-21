@@ -21,7 +21,7 @@
   {\global\booltrue{cmtryedition}}
   {\global\boolfalse{cmtryedition}}}
 
-\DeclareBibliographyOption{dashed}[true]{%
+\DeclareBibliographyOption[boolean]{dashed}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{pagetracker}%
      \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
@@ -55,21 +55,29 @@
 \DeclareFieldFormat{shorthandwidth}{#1}
 \setlength{\bibitemsep}{0pt}
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Formatierung für Namenslisten
 
-\DeclareNameFormat{last-first-italic}{%
-  \usebibmacro{name:last-first}{\textit{#1}}{\textit{#3}}{\textit{#5}}{\textit{#7}}%
-  \ifmorenames{%
-    \textit{\usebibmacro{name:andothers}}}%
-    {}}
+% Wenn ich mal eine eigene Namenslistenformatierung benötigen sollte,
+% geht das wie folgt ("rub-jura-namelist" in die Aliases unten
+% einsetzen):
+%\DeclareNameFormat{rub-jura-namelist}{%
+%  \usebibmacro{name:family-given}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+%  \usebibmacro{name:andothers}}
 
-\DeclareNameAlias{author}{last-first-italic}
-\DeclareNameAlias{editor}{last-first-italic}
-\DeclareNameAlias{translator}{last-first-italic}
-\DeclareNameAlias{byeditor}{first-last} % Beachte hierzu die
-                                        % Bibmakro-Redefinition von
-                                        % byeditor+others weiter unten.
+\DeclareNameAlias{author}{family-given}
+\DeclareNameAlias{editor}{family-given}
+\DeclareNameAlias{translator}{family-given}
+\DeclareNameAlias{byeditor}{given-family} % Beachte hierzu die
+                                          % Bibmakro-Redefinition von
+                                          % byeditor+others weiter unten.
+
+% Namen müssen kursiv sein.
+\renewcommand\mkbibnamefamily[1]{\textit{#1}}
+\renewcommand\mkbibnamegiven[1]{\textit{#1}}
+\renewcommand\mkbibnameprefix[1]{\textit{#1}}
+\renewcommand\mkbibnamesuffix[1]{\textit{#1}}
 
 % Juristen trennen Namen mit /, nicht mit Komma
 \renewcommand*\multinamedelim{\addslash}
