@@ -37,17 +37,24 @@
   {#1}%
   {\mkpageprefix[pagination]{#1}}}
 
-% Format für (kursive) Nachnamen
-\DeclareNameFormat{last-only-italic}{%
-  \usebibmacro{name:last}{\textit{\namepartfamily}}{\textit{\namepartgiven}}{\textit{\namepartprefix}}{\textit{\namepartsuffix}}%
-  \ifmorenames{%
-    \textit{\usebibmacro{name:andothers}}}%
-    {}}
+% Format für Nachnamen ohne Vornamen (in Fußnoten)
+% Beachte, wie das erste Argument für das name:family-Makro
+% allerdings auch den Adelstitel einbezieht, um ihn als Teil
+% des Familiennamens zu formatieren.
 \DeclareNameFormat{last-only}{%
-  \usebibmacro{name:last}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}
+  \usebibmacro{name:family}{\ifdefvoid{\namepartprefix}{\namepartfamily}{\namepartprefix~\namepartfamily}}{\namepartgiven}{\namepartprefix}{\namepartsuffix}
   \ifmorenames{%
     \usebibmacro{name:andothers}}%
-    {}}
+  {}}
+% Das folgende funktioniert nicht. mkbibnamefamily müsste aber
+% spezifisch für diese Art Namensliste geändert werden.
+% Findet ausschließlich in Kommentarfußnoten Anwendung.
+%\DeclareNameFormat{last-only-noitalic}{%
+%  \renewcommand{\mkbibnamefamily}[1]{\textrm{##1}%
+%  \usebibmacro{name:last}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}
+%  \ifmorenames{%
+%    \usebibmacro{name:andothers}}%
+%    {}}
 
 % Neue Eintragsoption primamtl: Wenn gesetzt, ist die primäre
 % Fundstelle amtlich. Dann wird sie ohne Gerichtsangabe zitiert
@@ -73,13 +80,13 @@
 % Styles für die einzelnen Fußnotenzitate
 
 \newbibmacro{rubcite:book}{%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only]{author}%
   \setunit{\nametitledelim}
   \usebibmacro{cite:title}%
 }
 
 \newbibmacro{rubcite:article}{%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only]{author}%
   \setunit{\nametitledelim}
   \usebibmacro{journal+issuetitle}%
   \newunit%
@@ -89,7 +96,7 @@
 }
 
 \newbibmacro{rubcite:incollection}{%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only]{author}%
   \setunit{\nametitledelim}%
   \usebibmacro{in:}%
   \usebibmacro{cite:title}% Gibt es kein shortbooktitle? Das wäre vorzugswürdig...
@@ -98,7 +105,7 @@
 }
 
 \newbibmacro{rubcite:inproceedings}{%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only]{author}%
   \setunit{\nametitledelim}%
   \usebibmacro{in:}%
   \printfield{booktitle}%
@@ -107,7 +114,7 @@
 }
 
 \newbibmacro{rubcite:inbook}{%
-  \printnames[last-only-italic]{author}%
+  \printnames[last-only]{author}%
   \setunit{\nametitledelim}%
   \usebibmacro{in:}%
   \printfield{booktitle}%
@@ -121,8 +128,8 @@
 % festgemacht. (Heißt: keine normalen prenotes mit @commentary-Einträgen).
 \newbibmacro{rubcite:commentary}{%
   {\ifbool{cbx:cmtryineditor}% prenote-Feld (= mehr als ein Editor) vorhanden?
-    {\printnames[last-only]{labelname}}%
-    {\printnames[last-only-italic]{labelname}}}%
+    {\printnames[last-only-noitalic]{labelname}}%
+    {\printnames[last-only]{labelname}}}%
   \setunit{\nametitledelim}
   \usebibmacro{cite:title}%
 }
@@ -130,7 +137,7 @@
 \newbibmacro{rubcite:jurisdiction}{%
   \iftoggle{primamtl}%
     {\printfield{primary}}%
-    {\printnames[last-only-italic]{author}%
+    {\printnames[last-only]{author}%
      \setunit{\addspace}%
      \printfield{primary}}%
    \ifbool{cbx:morejurisdict}%
@@ -147,9 +154,9 @@
 
 \newbibmacro{rubcite:collection}{%
   \ifnameundef{author}%
-    {\printnames[last-only-italic]{editor}%
+    {\printnames[last-only]{editor}%
      \setunit{\nametitledelim}}%
-    {\printnames[last-only-italic]{author}%
+    {\printnames[last-only]{author}%
       \setunit{\nametitledelim}%
       \usebibmacro{in:}}%
     \usebibmacro{cite:title}%
@@ -157,8 +164,8 @@
 
 \newbibmacro{rubcite:misc}{%
   \ifnameundef{author}%
-    {\printnames[last-only-italic]{editor}}%
-    {\printnames[last-only-italic]{author}}%
+    {\printnames[last-only]{editor}}%
+    {\printnames[last-only]{author}}%
   \setunit{\nametitledelim}%
   \usebibmacro{cite:title}%
 }
@@ -236,7 +243,7 @@
 % Literaturverzeichnis pro Artikel, und wird dort auch nicht als
 % „a.a.O.“ geführt, sondern als „siehe Fußnote X auf Seite Y“.
 \newbibmacro*{cite:ibid}{%
-  \printnames[last-only-italic]{labelname}%
+  \printnames[last-only]{labelname}%
   \newunit
   \printtext[bibhyperref]{\bibstring{opcit}}% „opcit“ statt „ibidem“
   \ifloccit
