@@ -145,11 +145,24 @@
        {}%
        {\setunit{\addspace{}=\addspace{}}%
         \printfield{secondary}}%
-      \setunit{\addspace{}—\addspace{}}%
-      \iffieldundef{title}%
-        {}%
-        {\printfield{title}}}%
-     {}%
+      }%
+      {}%
+   }
+
+% Gibt den Titel einer Entscheidung nach der Postnote aus.
+% Davor geht nicht, weil "BGHZ 149, 68 - Suche fehlerhafter
+% Zeichenketten, 74" falsch herum ist. Dieses Makro
+% macht gar nichts, wenn der Eintragstyp nicht "jurisdiction"
+% ist.
+\newbibmacro{rubcite:jurisdictiontitle}{%
+  \ifentrytype{jurisdiction}{%
+    \iffieldundef{title}%
+    {}%
+    {%
+      {\setunit{\addspace{}—\addspace{}}\printfield{title}}%
+    }
+  }
+  {}%
 }
 
 \newbibmacro{rubcite:collection}{%
@@ -314,12 +327,15 @@
   {\multicitedelim}
   {\usebibmacro{cite:postnote}}
 
+% Beachte die geänderte Definition im Vergleich zu
+% authortitle. Entscheidungsnamen kommen nach der Postnote!
 \DeclareCiteCommand{\footcite}[\mkbibfootnote]
   {\usebibmacro{prenote}}
   {\usebibmacro{citeindex}%
    \usebibmacro{cite}}
   {\multicitedelim}
-  {\usebibmacro{cite:postnote}}
+  {\usebibmacro{cite:postnote}%
+   \usebibmacro{rubcite:jurisdictiontitle}}
 
 \DeclareCiteCommand{\footcitetext}[\mkbibfootnotetext]
   {\usebibmacro{prenote}}
