@@ -88,10 +88,12 @@ diesen äußeren Beschränkungen gibt es aber einige handfeste technische
 Probleme, die sich nicht ohne weiteres lösen lassen:
 
 \begin{itemize}
-\item Bei Angabe der Option \verb+morejurisdict+ ist das
-  \verb+postnote+-Feld eines \verb+@jurisdiction+-Eintrags nicht
-  sinnvoll als bloße Seitenangabe verwendbar, da nicht klar ist,
-  worauf die Zahl sich bezieht.
+\item Wenn Entscheidungsnamen vergeben werden (also ein Feld
+  \verb+title+ für einen Eintrag des Typs \verb+@jurisdiction+
+  vorliegt) sollte das \verb+postnote+-Feld auf die exakte Fundstelle und/oder
+  sehr kurze Anmerkungen beschränkt werden, da der Entscheidungsname
+  unmittelbar \emph{hinter} dem \verb+postnote+-Feld ausgegeben wird.
+  Siehe dazu auch die Erläuterungen zu \verb+@jurisdiction+.
 \item Für Zitate aus Einträgen des Typs \verb+@commentary+ hat das
   \verb+prenote+-Feld eine besondere Bedeutung: Es gibt den Bearbeiter
   an. Es steht — auch bei Kommentaren, die nur einen Bearbeiter haben,
@@ -253,10 +255,8 @@ Paketes \verb+biblatex+ angegeben werden können.
 
 \begin{description}
 \item[morejurisdict] Wird ein \verb+@jurisdiction+-Eintrag zitiert, so
-  wird die Fußnote mit erweiterten Informationen (Sekundäre Fundstelle
-  und Titel, so weit verfügbar) angereichert. In der Folge kann die
-  Verwendung des \verb+postnote+Feldes schwierig lesbare Resultate
-  hervorbringen.
+  wird die Fußnote mit der sekundären Fundstelle, soweit
+  verfügbar,angereichert.
 \item[cmtryedit] Kommentare, die über einen \verb+shorthand+ zitiert
   werden, werden um die Auflage in Form einer hochgestellten
   Zahl\textsuperscript{42} erweitert. Dies ist normalerweise
@@ -744,8 +744,9 @@ hier nichts spezielleres angegeben ist. Sie lauten:
   der interessierten Fachöffentlichkeit mit einem mehr oder weniger
   geistreichen Titel versehen („Herrenreiter“, „Elfes“,
   „Bearshare“). Dieser kann hier angegeben werden und wird dann im
-  Literaturverzeichnis automatisch mit einem
-  vorangehenden Halbgeviertstrich angeführt.
+  Literaturverzeichnis und den Fußnoten automatisch mit einem
+  vorangehenden Halbgeviertstrich angeführt. Zu Problemen mit dem Feld
+  \verb+postnote+ siehe unten.
 \item[type] \emph{(erforderlich)} „Urteil“, „Beschluss“ oder
   „Entscheidung“.
 \end{description}
@@ -762,13 +763,28 @@ Fundstelle als amtliche behandelt. Ein Beispiel findet sich unten.
 Abhängig von der Paketoption \verb+morejurisdict+ sind die Fußnoten zu
 den Entscheidungen mehr oder weniger ausführlich. Fehlt die Option,
 beschränkt sich die Fußnote auf das erkennende Gericht bzw. die
-amtliche Sammlung und die Startseite, wird sie angegeben, dann werden
-die sekundäre Fundstelle und der Titel ebenfalls gesetzt. Letzteres
-verhindert leider den effektiven Einsatz des \verb+postnote+-Feldes,
-da eine dort angegebene Seitenzahl dann einsam hinter dem Titel einer
-Entscheidung landet. Kommt man freilich ohne Angabe einer exakten
-Fundstellenseite aus, so kann man die Option \verb+morejurisdict+
-getrost aktivieren und erhält so erheblich elegantere Fußnoten.
+amtliche Sammlung und die Startseite, wird sie angegeben, dann wird auch
+die sekundäre Fundstelle gesetzt.
+
+Ein Problem tut sich bei Entscheidungen mit Namen auf. Speziell im
+Gebiet des Gewerblichen Rechtsschutzes ist es üblich, fast jeder
+Gerichtsentscheidung einen Namen zu geben, und diesen sodann am Ende
+der Fußnote hinter einem Gedankenstrich anzugeben, etwa „BGHZ 67, 22,
+25f. — Dispositionsprogramm“. Das macht dieser Stil auch automatisch
+richtig, aber das Problem dabei ist, dass das „25f.“ der Inhalt des
+Felds \verb+postnote+ ist. Wenn man das Feld also zu langwierigen
+Erklärungen benutzt („hat das früher schon völlig anders gesehen...“),
+dann rutscht der Entscheidungstitel ganz ans Ende und er wirkt fehl am
+Platze. Korrekt wäre es, dann als „BGHZ 67, 22, 25f. —
+Dispositionsprogramm, hat das früher schon völlig anders gesehen“ zu
+zitieren, was aber wiederum von \Biblatex{} nicht unterstützt wird, da
+dies effektiv bedeutet, das Feld \verb+postnote+ in zwei Felder
+aufzuspalten, nämlich die exakte Fundstelle und die Erklärung dazu,
+mit dem Entscheidungstitel dazwischen. Daraus folgt, dass
+\verb+postnote+ bei Einträgen vom Typ \verb+@jurisdiction+ nur für die
+exakte Fundstelle und/oder kurze Anmerkungen (typisch: „m.\,w.\,N.“)
+benutzt werden sollte, bei denen es nicht so auffällt, wenn am Ende
+noch der Entscheidungstitel nachfolgt.
 
 \begin{rubexample}
 \begin{verbatim}
@@ -795,7 +811,8 @@ getrost aktivieren und erhält so erheblich elegantere Fußnoten.
 \end{verbatim}
 
 Das haben auch schon diverse\footcite[2129]{lg-koeln-njw-2012-2128}
-Gerichte erkannt\footcite{bverfge-24-236}.
+Gerichte erkannt\footcite{bverfge-24-236}. Und so weiter\footcite[240
+m.\,w.\,N]{bverfge-24-236}.
 
 \printbibliography
 \end{rubexample}
