@@ -296,26 +296,27 @@ unabhängig davon, ob man zusätzlich eine Fundstellenseite über das
 
 \begin{rubexample}
 \begin{verbatim}
-@article{hoernle-huster,
-  author = "Tatjana Hörnle and Stefan Huster",
-  title = "Wie weit reicht das Erziehungsrecht der
-    Eltern?",
-  subtitle = "Am Beispiel der Beschneidung von Jungen",
-  journaltitle = "JZ",
-  year = 2013,
-  pages = "328-339"
+@article{ahrens-21-thesen,
+  title = "21 Thesen zur Störerhaftung im UWG
+    und im Recht des Geistigen Eigentums",
+  author = "Hans-Jürgen Ahrens",
+  journaltitle = "WRP",
+  year = 2007,
+  pages = "1281-1290"}
 }
 \end{verbatim}
 
 Auch andere Vertreter in der Literatur haben sich für diese
-Herangehensweise ausgesprochen\footcite[330]{hoernle-huster}.
+Herangehensweise ausgesprochen\footcite[1283]{ahrens-21-thesen}.
 
 \printbibliography
 \end{rubexample}
 
 \subsection{@book}
 
-Der Eintragstyp \verb+@book+ umfasst Monografien und Lehrbücher.
+Der Eintragstyp \verb+@book+ umfasst Monografien und Lehrbücher. Eine
+klassisch in einem Verlag veröffentlichte Dissertation erfasst man als
+\verb+@book+, im übrigen als \verb+@thesis+.
 
 Es ist in der juristischen Fachliteratur üblich, insbesondere die
 meist nur das Rechtsgebiet benennenden Titel von Lehrbüchern in den
@@ -810,22 +811,21 @@ noch der Entscheidungstitel nachfolgt.
   primary = "NJW 2012, 2128",
   secondary = "FamRZ 2012, 1421"
 }
-@jurisdiction{bverfge-24-236,
-  author = "BVerfG",
+@jurisdiction{bverfg-lueth,
+  author = {{BVerfG}},
   gender = "sn",
-  date = "1968-10-16",
-  type = "Entscheidung",
-  az = "1 BvR 241/66",
-  primary = "BVerfGE 24, 236",
-  secondary = "NJW 1967, 1234",
-  title = "Fiktivtitel",
-  options = {primamtl}
-}
+  date = "1958-01-15",
+  az = "1 BvR 400/51",
+  primary = "BVerfGE 7, 198",
+  type = "Urteil",
+  title = "Lüth",
+  options = {primamtl}}
 \end{verbatim}
 
-Das haben auch schon diverse\footcite[2129]{lg-koeln-njw-2012-2128}
-Gerichte erkannt\footcite{bverfge-24-236}. Und so weiter\footcite[240
-m.\,w.\,N]{bverfge-24-236}.
+Beispielsurteil\footcite[2129]{lg-koeln-njw-2012-2128}. „[D]ie
+allgemeinen Gesetze müssen in ihrer das Grundrecht beschränkenden
+Wirkung ihrerseits im Lichte der Bedeutung dieses Grundrechts
+gesehen [...] werden.“\footcite[208 war grundlegend]{bverfg-lueth}.
 
 \printbibliography
 \end{rubexample}
@@ -1079,33 +1079,40 @@ Grundlage als „typisch“ deklariert\footcite[218f.]{studie}.
 \subsection{@thesis}
 
 Dieser Typ ist für Dissertationen, Habilitationsschriften,
-Masterarbeiten und ähnliche Dokumente zur Erlangung akademischer
-Grade gedacht.
+Masterarbeiten und ähnliche Dokumente zur Erlangung akademischer Grade
+gedacht, die \emph{nicht} klassisch über einen Verlag publiziert
+werden. Klassisch über einen Verlag publizierte Werke fallen als
+Monografie unter \verb+@book+, sodass für \verb+@thesis+ neben
+unveröffentlichten Werken vor allem moderne verlagslose
+(Selbst-)\-Pub\-li\-ka\-tio\.nen bleiben. Ist das Dokument online
+verfügbar, ist dieser Typ gegenüber \verb+@online+ spezieller und
+sollte mit den Feldern \verb+url+ und \verb+urldate+ angereichert
+werden. Bei Juristen sind solche Dokumente außerordentlich selten. Das
+hier im Beispiel zitierte Werk ist eine Rarität.
 
 \begin{rubexample}
 \begin{verbatim}
-@thesis{dissertation,
-  author = "Max Mustermann",
-  title = "Besondere Probleme irgendeines Rechtsgebiets",
-  publisher = "Franz Vahlen",
-  location = "München",
-  year = 1955,
-  institution = "Universität des Saarlands",
-  type = "diss. jur."
-}
+@thesis{mantz-offenenetze,
+  author = "Reto Mantz",
+  title = "Rechtsfragen offener Netze",
+  subtitle = "Rechtliche Gestaltung und Haftung des Access
+    Providers in zugangsoffenen (Funk-)Netzen",
+  location = "Karlsruhe",
+  year = 2008,
+  institution = "Universität Karlsruhe",
+  type = "diss. jur.",
+  url = "https://publikationen.bibliothek.kit.edu/%
+1000007749/227614",
+  urldate = "2019-12-24"}
 \end{verbatim}
 
-Dieser Gedanke tauchte erstmals in den 50er Jahren
-auf\footcite[123]{dissertation}.
+Die in offenen Netzen erbrachten Dienste fallen trotz
+Entgeltlosigkeit unter §\,3 Nr. 24 TKG\footcite[50]{mantz-offenenetze}.
 
 \printbibliography
 \end{rubexample}
 
 \section{Kontakt}\label{sec:kontakt}
-
-Marvin Gülker\\
-Vaersthausener Str. 73a\\
-59425 Unna
 
 \begin{tabbing}
   Webseite: \= \href{https://mg.guelker.eu}{https://mg.guelker.eu}\\
