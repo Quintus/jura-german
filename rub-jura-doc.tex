@@ -709,6 +709,20 @@ Verwendung dieses Typs daher darauf zu achten, den Aufruf von
 \printbibliography[nottype=jurisdiction]
 \end{verbatim}
 
+Es kann namentlich für die Fußnotenkontrolle vor der Abgabe
+universitärer Arbeiten sehr praktisch sein, ein separates
+Rechtsprechungsverzeichnis anzulegen. Dies erfolgt durch neuerlichen
+Einsatz von \verb+\printbibliography+ an geeigneter Stelle:
+
+\begin{verbatim}
+\printbibliography[type=jurisdiction,title=Rechtsprechung]
+\end{verbatim}
+
+So kann man sich etwa leicht am Anfang der Fußnotenkontrolle all die
+zitierten BGHZ-Bände besorgen und muss nicht während der Kontrolle
+ständig durch die Bibliothek laufen. Für die Erstellung der
+Abgabefassung entfernt man diesen Befehl dann einfach wieder.
+
 Dieser Typ benötigt weitaus mehr Informationen, als sich mit den
 bereits von \Biblatex unterstützten Standardfeldern erfassen
 lässt. Daher hat der Autor für diesen Typ \emph{zusätzliche} Felder
@@ -870,36 +884,47 @@ wiedergegeben\footcite[11]{vertrag}.
 
 \verb+@legislation+ dient der Erfassung amtlicher Dokumente der
 parlamentarischen Gesetzgebungsorgane, insbesondere von
-Gesetzesentwürfen und Stellungnahmen. Gerichtsentscheidungen werden
-mit \verb+@jurisdiction+ erfasst.
+Gesetzesentwürfen und Stellungnahmen. Nicht gedacht ist dieser Typ —
+entgegen der Dokumentation von \Biblatex — für fertige Gesetze.
+Juristen zitieren Gesetze üblicherweise schlicht mit dem
+amtlichen Kurztitel. Soll ausnahmsweise doch das Bibliografiesystem
+hierfür eingesetzt werden, wird die Nutzung von \verb+@legal+
+empfohlen. Gerichtsentscheidungen werden mit \verb+@jurisdiction+
+erfasst.
 
-Solche Dokumente liegen stets als sog. „Drucksache“ vor, die man
-gemeinhin nicht nach Autor zitiert, sondern mit einem besonderen
-Kürzel, welches das Organ und die Nummer der Drucksache angibt
-(„BT-Drs. 12/3456“). Sie werden üblicherweise auch nicht in das
-Literaturverzeichnis aufgenommen, sodass sich bei Verwendung der
-Ausschluss dieses Typs aus dem Literaturverzeichnis empfiehlt:
+
+Dokumente des Gesetzgebungsverfahrens liegen stets als sog.
+„Drucksache“ vor, die man gemeinhin nicht nach Autor zitiert, sondern
+mit einem besonderen Kürzel, welches das Organ und die Nummer der
+Drucksache angibt („BT-Drs. 12/3456“). Sie werden üblicherweise auch
+nicht in das Literaturverzeichnis aufgenommen, sodass sich bei
+Verwendung der Ausschluss dieses Typs aus dem Literaturverzeichnis
+empfiehlt:
 
 \begin{verbatim}
 \printbibliography[nottype=legislation]
 \end{verbatim}
 
-Dieser Stil unterstützt eine solche Aufnahme aber dennoch.
+Dieser Stil unterstützt eine solche Aufnahme aber dennoch. Wie beim
+Typ \verb+@jurisdiction+ ist das insbesondere bei der
+Fußnotenkontrolle kurz vor der Abgabe praktisch, um eine Liste aller
+zitierten Gesetzesmaterialien zur Verfügung zu haben:
 
-Der Typ \verb+@legislation+ wird von \Biblatex normalerweise nicht
+\begin{verbatim}
+\printbibliography[type=legislation,
+                   title=Gesetzesmaterialien]
+\end{verbatim}
+
+\verb+@legislation+ wird von \Biblatex normalerweise nicht
 bzw. nur als Alias für \verb+@misc+ unterstützt und ist
 dementsprechend nur sehr begrenzt auf andere Stile portabel. Im
 Gegensatz zu \verb+@jurisdiction+ waren hier aber immerhin keine
 gänzlich neuen Felder erforderlich, vielmehr können die bestehenden
 Felder sinnvoll verwendet werden. Die zulässigen Felder lauten:
 
-Dieser Typ ist entgegen der Dokumentation von \Biblatex nicht für
-fertige Gesetze vorgesehen. Der Autor hält diese Einordnung für einen
-logischen Fehler und empfiehlt dafür stattdessen \verb+@legal+.
-
 \begin{description}
 \item[author] \emph{(erforderlich)} Name des Organs („Deutscher
-  Bundesrat“, „Landtag des Landes Nordrhein-Westfalen“).
+  Bundestag“, „Landtag des Landes Nordrhein-Westfalen“).
 \item[date] \emph{(erforderlich)} Veröffentlichungsdatum als
   vollständige Angabe im Format Jahr-Monat-Tag.
 \item[number] \emph{(erforderlich)} Bloße Nummer des Dokuments, ohne
