@@ -930,11 +930,14 @@ Felder sinnvoll verwendet werden. Die zulässigen Felder lauten:
 \item[number] \emph{(erforderlich)} Bloße Nummer des Dokuments, ohne
   Kürzel des Organs („12/3456“).
 \item[title] \emph{(erforderlich)} Titel des Dokuments.
-\item[type] \emph{(erforderlich)} Dokumenttyp. Das ist eigentlich
-  immer „Drucksache“.
-\item[shorthand] \emph{(erforderlich)} Das Zitierformat für die Fußnoten,
-  bestehend aus dem Kürzel des Organs, des Typs und der Dokumentnummer
-  („BT-Drs. 12/3456“).
+\item[type] \emph{(erforderlich)} Dokumenttyp. Für deutsche
+  Gesetzesmaterialien ist das eigentlich immer „Drucksache“. Für
+  Dokumente auf EU"=Ebene ist deren jeweiliger Typ anzugeben, \zB
+  „KOM“ für Kommissionsdokumente.
+\item[shorthand] \emph{(erforderlich)} Das Zitierformat für die
+  Fußnoten. Theoretisch kann man das automatisch aus dem Typ ableiten,
+  aber praktisch hat sich der Verfasser die Arbeit dafür noch nicht
+  gemacht. Beispiele: „BT-Drs. 12/3456“, „KOM(2000) 123 endg.“
 \end{description}
 
 \begin{rubexample}
@@ -950,19 +953,22 @@ Felder sinnvoll verwendet werden. Die zulässigen Felder lauten:
   shorthand = "BT-Drs. 18/5453",
   date = "2015-07-02"
 }
-@legislation{lt-drs16-9078,
-  author = {{Landtag des Landes Nordrhein-Westfalen}},
-  title = "Gesetz zur Änderung gesetzlicher Befristungen im
-    Zusammenhang mit der ländlichen Bodenordnung, Entwurf",
-  type = "Drucksache",
-  number = "16/9078",
-  shorthand = "LTNW-Drs. 16/9078",
-  date = "2015-06-25"
+@legislation{kom-2003-702,
+  author = {{Kommission der Europäischen Gemeinschaften}},
+  title = "Erster Bericht über die Anwendung der Richtlinie
+    2000/31/EG des Europäischen Parlaments und des Rates
+    vom 8. Juni 2000 über bestimmte rechtliche Aspekte der
+    Dienste der Informationsgesellschaft, insbesondere des
+    elektronischen Geschäftsverkehrs, im Binnenmarkt",
+  type = "KOM",
+  date = "2003-11-21",
+  number = "702 endg.",
+  shorthand = "KOM(2003) 702 endg."}
 }
 \end{verbatim}
 
-Ein Bundes-\footcite{bt-drs18-5453} und ein
-Landesgesetzesentwurf\footcite[9]{lt-drs16-9078}.
+Ein Gesetzentwurf\footcite{bt-drs18-5453} und ein
+Bericht der Kommission\footcite[15]{kom-2003-702}.
 
 \printbibliography
 \end{rubexample}
